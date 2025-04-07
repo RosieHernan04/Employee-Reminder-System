@@ -1,0 +1,79 @@
+/* General Reset */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #FFEB3B; /* Custom Yellow */
+  color: #4CAF50; /* Custom Green */
+}
+
+/* Button Styles */
+button {
+  background-color: #FF9800; /* Custom Orange */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #795548; /* Custom Brown */
+}
+
+/* Center Content */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+/* Sidebar and Active Link Styles */
+.bg-primary {
+  background-color: #007bff !important;
+}
+
+.text-light {
+  color: #ffffff !important;
+}
+
+/* Calendar Styles */
+.react-calendar {
+  border: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+.react-calendar__tile--active {
+  background: #007bff !important;
+  color: white !important;
+}
+
+/* Sidebar Link Hover Effect */
+.sidebar-link:hover {
+  background-color: #0056b3; /* Darker Blue */
+  color: #ffffff !important;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Sidebar Link Active State */
+.sidebar-link-active {
+  background-color: #007bff;
+  color: #ffffff !important;
+  border-radius: 5px;
+}
+
+.hover-card {
+  transition: transform 0.2s ease-in-out;
+}
+.hover-card:hover {
+  transform: translateY(-5px);
+}
+.list-group-item {
+  transition: background-color 0.2s ease-in-out;
+}
+.list-group-item:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
