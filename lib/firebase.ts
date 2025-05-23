@@ -1,22 +1,89 @@
-// lib/firebase.js
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+// lib/firebase.ts
+import { initializeApp, getApps, FirebaseApp } from "firebase/app";
+import { getAuth, browserLocalPersistence, setPersistence, Auth } from "firebase/auth";
+import { getFirestore, Firestore } from "firebase/firestore";
+import { getMessaging, getToken, Messaging } from "firebase/messaging";
 
+// Firebase configuration type
+interface FirebaseConfig {
+  apiKey: string;
+  authDomain: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
+  measurementId?: string;
+}
 
 // Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyB3GixrKToHs6_rOn2nnYhz5Ucuq7SG1e4",
-  authDomain: "task-reminder-system-236c0.firebaseapp.com",
-  projectId: "task-reminder-system-236c0",
-  storageBucket: "task-reminder-system-236c0.appspot.com",
-  messagingSenderId: "326199277443",
-  appId: "1:326199277443:web:af60e13429dcbfa876e8b6",
-  measurementId: "G-N10VVMM67P",
+const firebaseConfig: FirebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || '',
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || '',
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || '',
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || '',
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '',
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '',
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+// Debug log for environment variables
+if (process.env.NODE_ENV === 'development') {
+  const missingVars = Object.entries(firebaseConfig)
+    .filter(([key, value]) => key !== 'measurementId' && !value)
+    .map(([key]) => key);
 
-export { auth, db };
+  if (missingVars.length > 0) {
+    console.warn('Missing Firebase configuration variables:', missingVars);
+    console.warn('Please check your .env.local file');
+  }
+
+  console.log('Firebase Config Status:', {
+    hasApiKey: !!firebaseConfig.apiKey,
+    hasAuthDomain: !!firebaseConfig.authDomain,
+    hasProjectId: !!firebaseConfig.projectId,
+    hasStorageBucket: !!firebaseConfig.storageBucket,
+    hasMessagingSenderId: !!firebaseConfig.messagingSenderId,
+    hasAppId: !!firebaseConfig.appId,
+    hasMeasurementId: !!firebaseConfig.measurementId,
+  });
+}
+
+// Initialize Firebase
+let app: FirebaseApp;
+let auth: Auth;
+let db: Firestore;
+let messaging: Messaging | null = null;
+let isInitialized = false;
+
+try {
+  if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+    console.log('Firebase initialized successfully');
+  } else {
+    app = getApps()[0];
+    console.log('Using existing Firebase instance');
+  }
+  
+  auth = getAuth(app);
+  db = getFirestore(app);
+
+  // Only initialize messaging in browser
+  if (typeof window !== 'undefined') {
+    messaging = getMessaging(app);
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        console.log('Firebase persistence set to local');
+        isInitialized = true;
+      })
+      .catch((error) => {
+        console.error("Error setting persistence:", error);
+      });
+  } else {
+    isInitialized = true;
+  }
+} catch (error) {
+  console.error('Error initializing Firebase:', error);
+}
+
+// Export as .js for compatibility with JS imports
+export { auth, db, messaging, getToken, isInitialized };

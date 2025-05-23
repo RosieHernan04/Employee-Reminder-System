@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "task-reminder-system-236c0"
-  }
+    "default": "task-reminder-system-236c0",
+    "task-reminder-system": "task-reminder-system-236c0"
+  },
+  "targets": {},
+  "etags": {}
 }

@@ -1,4 +1,4 @@
-import Link from 'next/link'; // Import Link from Next.js
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -7,7 +7,10 @@ export default function Home() {
       <nav
         className="navbar navbar-expand-lg navbar-light"
         style={{
-          backgroundColor: "#FFEB3B",
+          background: 'rgba(255, 235, 59, 0.25)',
+          backdropFilter: 'blur(20px)',
+          boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -17,11 +20,27 @@ export default function Home() {
         {/* Left Section: Logo and Buttons */}
         <div className="d-flex align-items-center">
           <a className="navbar-brand d-flex align-items-center" href="#">
-            <img
-              src="/487083768_557976863971305_3421396436649360911_n.jpg"
-              alt="ADECMPC Logo"
-              style={{ height: "50px", marginRight: "10px" }}
-            />
+            <div style={{
+              height: "50px",
+              width: "50px",
+              marginRight: "10px",
+              borderRadius: "50%",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "transparent"
+            }}>
+              <img
+                src="/487083768_557976863971305_3421396436649360911_n.jpg"
+                alt="ADECMPC Logo"
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "cover"
+                }}
+              />
+            </div>
             <span className="text-success fw-bold">ADECMPC</span>
           </a>
           <div className="ms-3">
@@ -29,12 +48,14 @@ export default function Home() {
               <button
                 className="btn"
                 style={{
-                  backgroundColor: "#4CAF50",
-                  color: "white",
+                  background: 'rgba(76, 175, 80, 0.3)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  color: "#1a472a",
                   marginRight: "10px",
                   fontWeight: "bold",
                   padding: "5px 15px",
-                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                 }}
               >
                 Log In
@@ -44,11 +65,13 @@ export default function Home() {
               <button
                 className="btn"
                 style={{
-                  backgroundColor: "#FF9800",
-                  color: "white",
+                  background: 'rgba(255, 152, 0, 0.3)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  color: "#e65100",
                   fontWeight: "bold",
                   padding: "5px 15px",
-                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                 }}
               >
                 Sign Up
@@ -61,24 +84,24 @@ export default function Home() {
         <div>
           <ul className="navbar-nav d-flex flex-row justify-content-center">
             <li className="nav-item mx-2">
-              <a className="nav-link text-success fw-bold" href="#">
+              <Link href="/" className="nav-link text-success fw-bold" style={{ borderBottom: '2px solid #4CAF50' }}>
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item mx-2">
-              <a className="nav-link text-success fw-bold" href="#">
+              <Link href="/about" className="nav-link text-success fw-bold">
                 About
-              </a>
+              </Link>
             </li>
             <li className="nav-item mx-2">
-              <a className="nav-link text-success fw-bold" href="#">
+              <Link href="/contact" className="nav-link text-success fw-bold">
                 Contact
-              </a>
+              </Link>
             </li>
             <li className="nav-item mx-2">
-              <a className="nav-link text-success fw-bold" href="#">
+              <Link href="/faqs" className="nav-link text-success fw-bold">
                 FAQs
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -103,7 +126,8 @@ export default function Home() {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black overlay
+            background: 'linear-gradient(135deg, rgba(45, 134, 89, 0.7) 0%, rgba(255, 140, 66, 0.7) 50%, rgba(141, 110, 99, 0.7) 100%)',
+            backdropFilter: 'blur(3px)',
             zIndex: 1,
           }}
         ></div>
@@ -111,7 +135,7 @@ export default function Home() {
           <h1
             className="fw-bold"
             style={{
-              textShadow: "2px 2px 6px rgba(0, 0, 0, 0.9)", // Stronger shadow for visibility
+              textShadow: "2px 2px 6px rgba(0, 0, 0, 0.9)",
               fontSize: "2.5rem",
             }}
           >
@@ -120,7 +144,7 @@ export default function Home() {
           <p
             className="lead"
             style={{
-              textShadow: "1px 1px 4px rgba(0, 0, 0, 0.8)", // Subtle shadow for subtitle
+              textShadow: "1px 1px 4px rgba(0, 0, 0, 0.8)",
               fontSize: "1.2rem",
             }}
           >
@@ -133,9 +157,9 @@ export default function Home() {
       <div
         className="container d-flex flex-column align-items-center justify-content-center"
         style={{
-          marginTop: "-100px", // Slight overlap with the background
-          position: "relative", // Ensure Vision and Mission are positioned relative to the container
-          zIndex: 3, // Bring Vision and Mission in front of the shadow
+          marginTop: "-100px",
+          position: "relative",
+          zIndex: 3,
         }}
       >
         <div className="row w-100">
@@ -144,31 +168,34 @@ export default function Home() {
             <div
               className="card shadow-lg d-flex flex-column"
               style={{
-                backgroundColor: "#4CAF50", // Filled green background
+                background: 'rgba(76, 175, 80, 0.2)',
+                backdropFilter: 'blur(20px)',
                 borderRadius: "15px",
-                padding: "0", // Remove padding to align content properly
+                padding: "0",
                 textAlign: "center",
                 width: "100%",
-                maxWidth: "400px", // Minimized container size
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                overflow: "hidden", // Ensures the image fills the container
+                maxWidth: "400px",
+                boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.2)",
+                overflow: "hidden",
+                border: '1px solid rgba(255, 255, 255, 0.3)',
               }}
             >
               {/* Text Section */}
               <div
                 style={{
-                  flex: "1", // Take up half of the container
+                  flex: "1",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center", // Center the text vertically
+                  justifyContent: "center",
                   padding: "20px",
+                  background: 'linear-gradient(135deg, rgba(76, 175, 80, 0.95), rgba(56, 142, 60, 0.95))',
                 }}
               >
                 <h5
                   className="fw-bold"
                   style={{
                     fontSize: "1.8rem",
-                    color: "#FFFFFF", // White text for Vision title
+                    color: "#FFFFFF",
                     textTransform: "uppercase",
                     letterSpacing: "1px",
                   }}
@@ -178,9 +205,9 @@ export default function Home() {
                 <p
                   style={{
                     fontSize: "1.1rem",
-                    color: "#FFFFFF", // White text for Vision description
+                    color: "#FFFFFF",
                     lineHeight: "1.8",
-                    margin: "0", // Remove extra margin
+                    margin: "0",
                   }}
                 >
                   To be a multi-billionaire cooperative.
@@ -189,18 +216,21 @@ export default function Home() {
               {/* Image Section */}
               <div
                 style={{
-                  flex: "1", // Take up half of the container
-                  height: "200px", // Fixed height for consistency
+                  flex: "1",
+                  height: "150px",
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  backdropFilter: 'blur(10px)',
                 }}
               >
                 <img
-                  src="/billion-sign-or-stamp-on-white-background-vector-illustration-T7GC7B.jpg"
+                  src="/pngtree-money-bag-with-plant-growing-from-coins-png-image_14332250.png"
                   alt="Vision"
                   className="img-fluid"
                   style={{
                     height: "100%",
                     width: "100%",
-                    objectFit: "cover", // Ensure the image covers the entire space
+                    objectFit: "contain",
+                    padding: "15px",
                   }}
                 />
               </div>
@@ -212,31 +242,34 @@ export default function Home() {
             <div
               className="card shadow-lg d-flex flex-column"
               style={{
-                backgroundColor: "#FF9800", // Filled orange background
+                background: 'rgba(255, 152, 0, 0.2)',
+                backdropFilter: 'blur(20px)',
                 borderRadius: "15px",
-                padding: "0", // Remove padding to align content properly
+                padding: "0",
                 textAlign: "center",
                 width: "100%",
-                maxWidth: "400px", // Minimized container size
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                overflow: "hidden", // Ensures the image fills the container
+                maxWidth: "400px",
+                boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.2)",
+                overflow: "hidden",
+                border: '1px solid rgba(255, 255, 255, 0.3)',
               }}
             >
               {/* Text Section */}
               <div
                 style={{
-                  flex: "1", // Take up half of the container
+                  flex: "1",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center", // Center the text vertically
+                  justifyContent: "center",
                   padding: "20px",
+                  background: 'linear-gradient(135deg, rgba(255, 152, 0, 0.95), rgba(245, 124, 0, 0.95))',
                 }}
               >
                 <h5
                   className="fw-bold"
                   style={{
                     fontSize: "1.8rem",
-                    color: "#FFFFFF", // White text for Mission title
+                    color: "#FFFFFF",
                     textTransform: "uppercase",
                     letterSpacing: "1px",
                   }}
@@ -246,30 +279,34 @@ export default function Home() {
                 <p
                   style={{
                     fontSize: "1.1rem",
-                    color: "#FFFFFF", // White text for Mission description
+                    color: "#FFFFFF",
                     lineHeight: "1.8",
-                    margin: "0", // Remove extra margin
+                    margin: "0",
                   }}
                 >
                   We are committed to providing high-quality services and sustainable solutions that uplift the lives of
                   our members, strengthen financial resources, and create meaningful impacts in the community.
                 </p>
               </div>
-              {/* Image Section */}
+              {/* Mission Image Section */}
               <div
                 style={{
-                  flex: "1", // Take up half of the container
-                  height: "200px", // Fixed height for consistency
+                  flex: "1",
+                  height: "150px",
+                  background: 'transparent',
+                  backdropFilter: 'blur(10px)',
                 }}
               >
                 <img
-                  src="/helping-hand-icon-design-free-vector.jpg"
+                  src="/Picture2.png"
                   alt="Mission"
                   className="img-fluid"
                   style={{
                     height: "100%",
                     width: "100%",
-                    objectFit: "cover", // Ensure the image covers the entire space
+                    objectFit: "contain",
+                    padding: "15px",
+                    mixBlendMode: "multiply",
                   }}
                 />
               </div>
@@ -277,6 +314,37 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        .navbar-nav .nav-link {
+          transition: color 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+          color: #1a472a !important;
+        }
+        
+        .btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+          background: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .card {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.3) !important;
+        }
+      `}</style>
     </div>
   );
 }

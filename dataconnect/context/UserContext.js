@@ -9,6 +9,22 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null); // Initialize user as null
   const [loading, setLoading] = useState(true); // Add loading state
 
+  const fetchUserRole = async (uid) => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", uid));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        console.log("Fetched user data from Firestore:", data);
+        return data;
+      }
+      console.log("No user document found for uid:", uid);
+      return null;
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -19,43 +35,43 @@ export function UserProvider({ children }) {
       if (firebaseUser) {
         setLoading(true);
         try {
-          const userRole = await fetchUserRole(firebaseUser.uid);
-          const userData = {
-            name: firebaseUser.displayName || firebaseUser.email.split("@")[0],
+          const firestoreData = await fetchUserRole(firebaseUser.uid);
+          console.log("Firestore data:", firestoreData);
+          
+          // Create user object with Firestore data taking precedence
+          const user = {
+            ...firestoreData, // Spread Firestore data first
+            uid: firebaseUser.uid,
             email: firebaseUser.email,
-            role: userRole,
+            // Ensure role and fullName are set from Firestore or fallback
+            role: firestoreData?.role || 'employee',
+            fullName: firestoreData?.fullName || firebaseUser.displayName || firebaseUser.email.split('@')[0]
           };
-          setUser(userData);
-          localStorage.setItem("user", JSON.stringify(userData)); // Persist user data
+          
+          console.log("Final user object:", user);
+          setUser(user);
+          localStorage.setItem("user", JSON.stringify(user));
         } catch (error) {
-          console.error("Error fetching user role:", error);
-          setUser(null);
+          console.error("Error setting up user:", error);
+          const user = {
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            role: 'employee',
+            fullName: firebaseUser.displayName || firebaseUser.email.split('@')[0]
+          };
+          setUser(user);
+          localStorage.setItem("user", JSON.stringify(user));
         }
+        setLoading(false);
       } else {
         localStorage.removeItem("user");
         setUser(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
   
     return () => unsubscribe();
   }, []);
-  
-
-  // Function to fetch user role from Firestore
-  const fetchUserRole = async (uid) => {
-    try {
-      const userDoc = await getDoc(doc(db, "users", uid)); // Assuming roles are stored in a "users" collection
-      if (userDoc.exists()) {
-        return userDoc.data().role; // Ensure the document has a "role" field
-      } else {
-        throw new Error("User role not found");
-      }
-    } catch (error) {
-      console.error("Error fetching user role:", error);
-      throw error;
-    }
-  };
 
   return (
     <UserContext.Provider value={{ user, setUser, loading }}>

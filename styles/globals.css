@@ -64,16 +64,130 @@ button:hover {
   border-radius: 5px;
 }
 
-.hover-card {
-  transition: transform 0.2s ease-in-out;
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Dim background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Ensure it's above other content */
 }
-.hover-card:hover {
-  transform: translateY(-5px);
+
+/* Hide modal */
+.hidden {
+  display: none;
 }
-.list-group-item {
-  transition: background-color 0.2s ease-in-out;
+
+/* Modal content box */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  min-width: 300px;
+  max-width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-.list-group-item:hover {
+
+/* Close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Warning Icon Container */
+.warning-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+/* Task Operations Card Styles */
+.task-operations-card .list-group-item {
+  border: none;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+.task-operations-card .list-group-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transform: translateX(5px);
+}
+
+.task-operations-card .icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+/* Modal Animation */
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out;
+  transform: translate(0, -50px);
+}
+
+.modal.show .modal-dialog {
+  transform: none;
+}
+
+/* Responsive Modal */
+@media (max-width: 576px) {
+  .modal-dialog {
+    margin: 0.5rem;
+  }
+}
+
+.calendar-day {
+  position: relative;
+  min-height: 100px;
+  padding: 5px;
+  border: 1px solid #dee2e6;
+  background-color: #fff;
+}
+
+.calendar-day.other-month {
   background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.calendar-day.today {
+  background-color: #e3f2fd;
+}
+
+.day-number {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.meeting-indicator {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  right: 5px;
+}
+
+.meeting-indicator .badge {
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-day:hover {
+  background-color: #f0f0f0;
   cursor: pointer;
 }

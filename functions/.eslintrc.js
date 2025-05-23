@@ -30,4 +30,12 @@ module.exports = {
     "import/no-unresolved": 0,
     "indent": ["error", 2],
   },
+  overrides: [
+    {
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
 };

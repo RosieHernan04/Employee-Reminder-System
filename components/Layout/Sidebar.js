@@ -1,146 +1,186 @@
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useUser } from "../../dataconnect/context/UserContext";
+import Image from "next/image";
 
 export default function Sidebar() {
   const router = useRouter();
-  const isActive = (path) => router.pathname === path;
+  const { user } = useUser();
+  const [hoveredItem, setHoveredItem] = useState(null);
+
+  const handleLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem("user");
+    // Redirect to login page
+    router.push("/login");
+  };
+
+  const navItems = [
+    {
+      name: "Dashboard",
+      path: "/employee/dashboard",
+      icon: "bi bi-speedometer2",
+    },
+    {
+      name: "My Tasks",
+      path: "/employee/my-tasks",
+      icon: "bi bi-list-task",
+    },
+    {
+      name: "Meetings",
+      path: "/employee/meetings",
+      icon: "bi bi-calendar-check",
+    },
+    {
+      name: "Profile Settings", // Changed from "Create Task" to "Profile Settings"
+      path: "/employee/settings", // Updated path
+      icon: "bi bi-person-circle",
+    },
+  ];
 
   return (
-    <aside
+    <div
+      className="sidebar"
       style={{
         width: "350px",
-        display: "flex",
-        flexDirection: "column",
-        background: "linear-gradient(to bottom, #1a472a, #2d8659)",
-        minHeight: "100vh",
-        padding: "1.5rem",
-        color: "white",
+        height: "100vh",
         position: "fixed",
         left: 0,
         top: 0,
-        overflowY: "auto",
+        backgroundColor: "#1a472a",
+        color: "white",
+        padding: "20px",
+        zIndex: 1000,
+        boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
       }}
     >
-      <div className="mb-4 text-center">
-        <img
-          src="/487083768_557976863971305_3421396436649360911_n.jpg"
-          alt="ADECMPC Logo"
-          style={{ width: "150px", marginBottom: "10px", borderRadius: "50%" }}
-        />
-        <h2 className="text-warning" style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-          ADECMPC
-        </h2>
+      <div className="text-center mb-4">
+        <div className="mb-3">
+          <img
+            src="/487083768_557976863971305_3421396436649360911_n.jpg"
+            alt="ADECMPC Logo"
+            style={{
+              width: "100px",
+              height: "100px",
+              borderRadius: "50%",
+              border: "3px solid rgba(255,255,255,0.2)",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+            }}
+          />
+        </div>
+        <h3 style={{ fontWeight: "bold", color: "#ffc107" }}>ADECMPC</h3>
+        <p className="mb-0" style={{ fontSize: "0.9rem", opacity: 0.8 }}>
+          Employee Portal
+        </p>
+      </div>
+
+      <div
+        className="user-info mb-4 p-3"
+        style={{
+          background: "rgba(255,255,255,0.1)",
+          borderRadius: "10px",
+          border: "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        <div className="d-flex align-items-center">
+          <div className="me-3">
+            <div
+              style={{
+                width: "45px",
+                height: "45px",
+                background: "rgba(255,255,255,0.2)",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <i className="bi bi-person-circle" style={{ fontSize: "1.8rem" }}></i>
+            </div>
+          </div>
+          <div style={{ flex: 1 }}>
+            <h6
+              className="mb-0"
+              style={{
+                fontWeight: "600",
+                fontSize: "1.1rem",
+                color: "#ffc107",
+                lineHeight: "1.2",
+              }}
+            >
+              {user?.fullName || "Employee"}
+            </h6>
+          </div>
+        </div>
       </div>
 
       <nav>
-        <ul className="list-unstyled">
-          <li className="mb-3">
-            <Link
-              href="/dashboard"
-              className={`d-flex align-items-center p-3 rounded text-decoration-none ${
-                isActive("/dashboard") ? "bg-success" : ""
-              }`}
+        {navItems.map((item) => (
+          <Link
+            key={item.path}
+            href={item.path}
+            style={{
+              display: "block",
+              padding: "12px 15px",
+              color: "white",
+              textDecoration: "none",
+              marginBottom: "5px",
+              borderRadius: "8px",
+              transition: "all 0.3s ease",
+              position: "relative",
+              overflow: "hidden",
+              backgroundColor:
+                router.pathname === item.path ? "rgba(255,255,255,0.1)" : "transparent",
+            }}
+            onMouseEnter={() => setHoveredItem(item.path)}
+            onMouseLeave={() => setHoveredItem(null)}
+          >
+            <div
               style={{
-                color: "white",
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                transition: "all 0.2s ease",
-                cursor: "pointer",
-                backgroundColor: isActive("/dashboard") ? "rgba(40, 167, 69, 0.8)" : "rgba(0, 0, 0, 0.2)",
-                ":hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                },
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                width: "100%",
+                height: "2px",
+                background: "white",
+                transform: `scaleX(${hoveredItem === item.path ? 1 : 0})`,
+                transformOrigin: "left",
+                transition: "transform 0.3s ease",
               }}
-            >
-              <i className="bi bi-house me-2"></i> Dashboard
-            </Link>
-          </li>
-          <li className="mb-3">
-            <Link
-              href="/tasks"
-              className={`d-flex align-items-center p-3 rounded text-decoration-none ${
-                isActive("/tasks") ? "bg-success" : ""
-              }`}
-              style={{
-                color: "white",
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                transition: "all 0.2s ease",
-                cursor: "pointer",
-                backgroundColor: isActive("/tasks") ? "rgba(40, 167, 69, 0.8)" : "rgba(0, 0, 0, 0.2)",
-                ":hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                },
-              }}
-            >
-              <i className="bi bi-list-check me-2"></i> My Tasks
-            </Link>
-          </li>
-          <li className="mb-3">
-            <Link
-              href="/meetings"
-              className={`d-flex align-items-center p-3 rounded text-decoration-none ${
-                isActive("/meetings") ? "bg-success" : ""
-              }`}
-              style={{
-                color: "white",
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                transition: "all 0.2s ease",
-                cursor: "pointer",
-                backgroundColor: isActive("/meetings") ? "rgba(40, 167, 69, 0.8)" : "rgba(0, 0, 0, 0.2)",
-                ":hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                },
-              }}
-            >
-              <i className="bi bi-calendar-event me-2"></i> Meetings
-            </Link>
-          </li>
-          <li className="mb-3">
-            <Link
-              href="/documents"
-              className={`d-flex align-items-center p-3 rounded text-decoration-none ${
-                isActive("/documents") ? "bg-success" : ""
-              }`}
-              style={{
-                color: "white",
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                transition: "all 0.2s ease",
-                cursor: "pointer",
-                backgroundColor: isActive("/documents") ? "rgba(40, 167, 69, 0.8)" : "rgba(0, 0, 0, 0.2)",
-                ":hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                },
-              }}
-            >
-              <i className="bi bi-file-earmark-text me-2"></i> Documents
-            </Link>
-          </li>
-          <li className="mb-3">
-            <Link
-              href="/profile"
-              className={`d-flex align-items-center p-3 rounded text-decoration-none ${
-                isActive("/profile") ? "bg-success" : ""
-              }`}
-              style={{
-                color: "white",
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                transition: "all 0.2s ease",
-                cursor: "pointer",
-                backgroundColor: isActive("/profile") ? "rgba(40, 167, 69, 0.8)" : "rgba(0, 0, 0, 0.2)",
-                ":hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                },
-              }}
-            >
-              <i className="bi bi-person me-2"></i> My Profile
-            </Link>
-          </li>
-        </ul>
+            />
+            <i className={`${item.icon} me-2`}></i>
+            {item.name}
+          </Link>
+        ))}
       </nav>
-    </aside>
+
+      <div
+        className="mt-auto"
+        style={{ position: "absolute", bottom: "20px", width: "calc(100% - 40px)" }}
+      >
+        <button
+          onClick={handleLogout}
+          style={{
+            width: "100%",
+            padding: "10px",
+            background: "rgba(255,255,255,0.1)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            color: "white",
+            borderRadius: "8px",
+            transition: "all 0.3s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "rgba(255,255,255,0.2)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+          }}
+        >
+          <i className="bi bi-box-arrow-right me-2"></i>
+          Logout
+        </button>
+      </div>
+    </div>
   );
 }

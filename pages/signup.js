@@ -55,40 +55,46 @@ export default function Signup() {
   };
 
   return (
-    <div>
+    <div className="signup-container">
       {/* Navbar */}
-      <nav
-        className="navbar navbar-expand-lg navbar-light"
-        style={{
-          backgroundColor: "#FFEB3B",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "10px 20px",
-        }}
-      >
-        <div className="d-flex align-items-center">
+      <nav className="navbar navbar-expand-lg navbar-light" style={{
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        position: 'fixed',
+        width: '100%',
+        zIndex: 1000,
+      }}>
+        <div className="container-fluid">
           <a className="navbar-brand d-flex align-items-center" href="#">
             <img
               src="/487083768_557976863971305_3421396436649360911_n.jpg"
               alt="ADECMPC Logo"
-              style={{ height: "50px", marginRight: "10px" }}
+              style={{ 
+                height: "45px", 
+                marginRight: "10px",
+                borderRadius: "50%",
+                background: "transparent"
+              }}
             />
-            <span className="text-success fw-bold">ADECMPC</span>
+            <span style={{ 
+              background: 'linear-gradient(45deg, #2d8659, #1a472a)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontWeight: "bold",
+              fontSize: '1.5rem'
+            }}>ADECMPC</span>
           </a>
           <div className="ms-3">
             <Link href="/">
-              <button
-                className="btn"
-                style={{
-                  backgroundColor: "#4CAF50",
-                  color: "white",
-                  marginRight: "10px",
-                  fontWeight: "bold",
-                  padding: "5px 15px",
-                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
-                }}
-              >
+              <button className="btn btn-primary" style={{
+                background: 'linear-gradient(45deg, #2d8659, #1a472a)',
+                border: 'none',
+                padding: '8px 20px',
+                borderRadius: '25px',
+                fontWeight: '500',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+              }}>
                 Home
               </button>
             </Link>
@@ -96,166 +102,276 @@ export default function Signup() {
         </div>
       </nav>
 
-      {/* Background Section */}
-      <div
-        style={{
-          backgroundImage: "url('/social-impact-1.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100vh",
-          position: "relative",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {/* Black Shadow Overlay */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 1,
-          }}
-        ></div>
+      {/* Main Content */}
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #2d8659 0%, #ff8c42 50%, #8d6e63 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '80px 20px'
+      }}>
+        <div style={{
+          width: '100%',
+          maxWidth: '480px',
+          padding: '20px'
+        }}>
+          {/* Glass Card */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.3)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '20px',
+            padding: '40px 30px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            border: '2px solid rgba(255, 255, 255, 0.3)'
+          }}>
+            <div className="text-center mb-4">
+              <img
+                src="/487083768_557976863971305_3421396436649360911_n.jpg"
+                alt="ADECMPC Logo"
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  marginBottom: '20px',
+                  borderRadius: '50%',
+                  border: '3px solid rgba(255, 255, 255, 0.8)',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
+                }}
+              />
+              <h2 style={{
+                color: '#fff',
+                fontSize: '1.8rem',
+                fontWeight: '600',
+                marginBottom: '10px',
+                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)'
+              }}>Create Account</h2>
+              <p style={{
+                color: '#fff',
+                fontSize: '0.95rem',
+                textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)'
+              }}>Join ADECMPC today</p>
+            </div>
 
-        {/* Content */}
-        <div style={{ zIndex: 2, width: "100%", maxWidth: "400px" }}>
-          <h1
-            style={{
-              textAlign: "center",
-              color: "#fff",
-              marginBottom: "20px",
-              textShadow: "2px 2px 6px rgba(0, 0, 0, 0.9)",
-            }}
-          >
-            Welcome to ADECMPC
-          </h1>
-          <div
-            style={{
-              backgroundColor: "#fff",
-              padding: "30px",
-              borderRadius: "10px",
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Sign Up</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>} {/* Display error */}
-            {success && <p style={{ color: "green" }}>{success}</p>} {/* Display success */}
+            {error && (
+              <div style={{
+                background: 'rgba(255, 82, 82, 0.1)',
+                color: '#ff5252',
+                padding: '10px 15px',
+                borderRadius: '10px',
+                marginBottom: '20px',
+                fontSize: '0.9rem'
+              }}>
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div style={{
+                background: 'rgba(76, 175, 80, 0.1)',
+                color: '#4caf50',
+                padding: '10px 15px',
+                borderRadius: '10px',
+                marginBottom: '20px',
+                fontSize: '0.9rem'
+              }}>
+                {success}
+              </div>
+            )}
+
             <form onSubmit={handleSubmit}>
-              <div style={{ marginBottom: "15px" }}>
-                <label htmlFor="fullName" style={{ display: "block", marginBottom: "5px" }}>
-                  Full Name
-                </label>
+              <div className="mb-3">
                 <input
                   type="text"
-                  id="fullName"
                   name="fullName"
+                  placeholder="Full Name"
                   value={formData.fullName}
                   onChange={handleChange}
                   style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
+                    width: '100%',
+                    padding: '12px 20px',
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '12px',
+                    color: '#333',
+                    fontSize: '0.95rem',
+                    outline: 'none',
+                    backdropFilter: 'blur(5px)',
+                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)'
                   }}
+                  required
                 />
               </div>
-              <div style={{ marginBottom: "15px" }}>
-                <label htmlFor="email" style={{ display: "block", marginBottom: "5px" }}>
-                  Email Address
-                </label>
+              <div className="mb-3">
                 <input
                   type="email"
-                  id="email"
                   name="email"
+                  placeholder="Email Address"
                   value={formData.email}
                   onChange={handleChange}
                   style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
+                    width: '100%',
+                    padding: '12px 20px',
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '12px',
+                    color: '#333',
+                    fontSize: '0.95rem',
+                    outline: 'none',
+                    backdropFilter: 'blur(5px)',
+                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)'
                   }}
+                  required
                 />
               </div>
-              <div style={{ marginBottom: "15px" }}>
-                <label htmlFor="role" style={{ display: "block", marginBottom: "5px" }}>
-                  Position/Role
-                </label>
+              <div className="mb-3">
                 <select
-                  id="role"
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
                   style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
+                    width: '100%',
+                    padding: '12px 20px',
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '12px',
+                    color: '#333',
+                    fontSize: '0.95rem',
+                    outline: 'none',
+                    backdropFilter: 'blur(5px)',
+                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)',
+                    appearance: 'none'
                   }}
+                  required
                 >
-                  <option value="employee">Employee</option>
-                  <option value="admin">Admin</option>
+                  <option value="employee" style={{ color: '#333', background: '#fff' }}>Employee</option>
+                  <option value="admin" style={{ color: '#333', background: '#fff' }}>Admin</option>
                 </select>
               </div>
-              <div style={{ marginBottom: "15px" }}>
-                <label htmlFor="username" style={{ display: "block", marginBottom: "5px" }}>
-                  Preferred Username
-                </label>
+              <div className="mb-3">
                 <input
                   type="text"
-                  id="username"
                   name="username"
+                  placeholder="Preferred Username"
                   value={formData.username}
                   onChange={handleChange}
                   style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
+                    width: '100%',
+                    padding: '12px 20px',
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '12px',
+                    color: '#333',
+                    fontSize: '0.95rem',
+                    outline: 'none',
+                    backdropFilter: 'blur(5px)',
+                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)'
                   }}
+                  required
                 />
               </div>
-              <div style={{ marginBottom: "15px" }}>
-                <label htmlFor="password" style={{ display: "block", marginBottom: "5px" }}>
-                  Password
-                </label>
+              <div className="mb-4">
                 <input
                   type="password"
-                  id="password"
                   name="password"
+                  placeholder="Password"
                   value={formData.password}
                   onChange={handleChange}
                   style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
+                    width: '100%',
+                    padding: '12px 20px',
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '12px',
+                    color: '#333',
+                    fontSize: '0.95rem',
+                    outline: 'none',
+                    backdropFilter: 'blur(5px)',
+                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)'
                   }}
+                  required
                 />
               </div>
               <button
                 type="submit"
                 style={{
-                  width: "100%",
-                  padding: "10px",
-                  backgroundColor: "#FF9800",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "5px",
-                  fontWeight: "bold",
+                  width: '100%',
+                  padding: '12px',
+                  background: 'linear-gradient(45deg, #2d8659, #1a472a)',
+                  border: '2px solid rgba(255, 255, 255, 0.3)',
+                  borderRadius: '12px',
+                  color: '#fff',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  backdropFilter: 'blur(5px)'
                 }}
               >
                 Sign Up
               </button>
+              
+              <div className="text-center mt-4">
+                <p style={{ 
+                  color: '#fff', 
+                  fontSize: '0.95rem',
+                  textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)'
+                }}>
+                  Already have an account?{' '}
+                  <Link href="/login" style={{ 
+                    color: '#fff',
+                    textDecoration: 'none',
+                    fontWeight: '600',
+                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)'
+                  }}>
+                    Sign In
+                  </Link>
+                </p>
+              </div>
             </form>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        .signup-container {
+          min-height: 100vh;
+          background: linear-gradient(135deg, #2d8659 0%, #ff8c42 50%, #8d6e63 100%);
+        }
+        
+        input::placeholder,
+        select::placeholder {
+          color: rgba(0, 0, 0, 0.6);
+        }
+        
+        input:focus,
+        select:focus {
+          border-color: rgba(255, 255, 255, 0.8) !important;
+          box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+        }
+        
+        select option {
+          background-color: #fff;
+          color: #333;
+        }
+        
+        button:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+          border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        select:-webkit-autofill,
+        select:-webkit-autofill:hover,
+        select:-webkit-autofill:focus {
+          -webkit-text-fill-color: #333;
+          -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.8) inset;
+          transition: background-color 5000s ease-in-out 0s;
+        }
+      `}</style>
     </div>
   );
 }
