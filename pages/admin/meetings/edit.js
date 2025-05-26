@@ -32,11 +32,19 @@ export default function EditDeleteMeeting() {
     try {
       const q = query(collection(db, 'meetings'));
       const querySnapshot = await getDocs(q);
-      const meetingsList = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        datetime: doc.data().datetime?.toDate() || new Date()
-      }));
+      const meetingsList = querySnapshot.docs.map(docSnap => {
+        const data = docSnap.data();
+        // Use "date" for date column and "reminderTime" for time column
+        let dateObj = data.date?.toDate ? data.date.toDate() : (typeof data.date === 'string' ? new Date(data.date) : new Date());
+        let timeStr = data.reminderTime || '09:00';
+        // Do not combine date and time for display, keep them separate
+        return {
+          id: docSnap.id,
+          ...data,
+          date: dateObj, // for date column
+          reminderTime: timeStr // for time column
+        };
+      });
       setMeetings(meetingsList);
     } catch (error) {
       console.error('Error fetching meetings:', error);
@@ -55,8 +63,8 @@ export default function EditDeleteMeeting() {
     setFormData({
       title: meeting.title,
       description: meeting.description,
-      date: meeting.datetime.toISOString().split('T')[0],
-      time: meeting.datetime.toTimeString().slice(0, 5),
+      date: meeting.date ? meeting.date.toISOString().split('T')[0] : '',
+      time: meeting.reminderTime || '09:00',
       type: meeting.type,
       location: meeting.location,
       duration: meeting.duration
@@ -75,11 +83,14 @@ export default function EditDeleteMeeting() {
     e.preventDefault();
     setLoading(true);
     try {
-      const datetime = new Date(formData.date + 'T' + formData.time);
+      const dateObj = new Date(formData.date);
+      const [hours, minutes] = (formData.time || '09:00').split(':').map(Number);
+      dateObj.setHours(hours || 0, minutes || 0, 0, 0);
       await updateDoc(doc(db, 'meetings', editingMeeting.id), {
         title: formData.title,
         description: formData.description,
-        datetime: datetime,
+        date: dateObj,
+        reminderTime: formData.time,
         type: formData.type,
         location: formData.location,
         duration: formData.duration,
@@ -308,8 +319,8 @@ export default function EditDeleteMeeting() {
                         {meetings.map(meeting => (
                           <tr key={meeting.id}>
                             <td>{meeting.title}</td>
-                            <td>{meeting.datetime.toLocaleDateString()}</td>
-                            <td>{meeting.datetime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                            <td>{meeting.date ? meeting.date.toLocaleDateString() : ''}</td>
+                            <td>{meeting.reminderTime}</td>
                             <td>{meeting.type}</td>
                             <td>{meeting.location}</td>
                             <td>
@@ -355,8 +366,8 @@ export default function EditDeleteMeeting() {
                     <strong>Meeting Details:</strong>
                     <ul className="mb-0">
                       <li>Title: {meetingToDelete.title}</li>
-                      <li>Date: {meetingToDelete.datetime.toLocaleDateString()}</li>
-                      <li>Time: {meetingToDelete.datetime.toLocaleTimeString()}</li>
+                      <li>Date: {meetingToDelete.date ? meetingToDelete.date.toLocaleDateString() : ''}</li>
+                      <li>Time: {meetingToDelete.reminderTime}</li>
                       <li>Type: {meetingToDelete.type}</li>
                     </ul>
                   </div>

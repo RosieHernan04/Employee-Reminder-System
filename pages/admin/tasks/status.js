@@ -61,6 +61,15 @@ export default function TaskStatus() {
     fetchTasks();
   }, []);
 
+  useEffect(() => {
+    // Clean up scroll lock if component unmounts while modal is open
+    return () => {
+      if (typeof window !== "undefined") {
+        document.body.style.overflow = '';
+      }
+    };
+  }, []);
+
   const handleStatusClick = (task) => {
     setSelectedTask(task);
     setStatusForm({
@@ -84,7 +93,10 @@ export default function TaskStatus() {
   const handleCloseModal = () => {
     setShowStatusModal(false);
     setSelectedTask(null);
-    document.body.style.overflow = 'auto';
+    // Always restore scroll on modal close
+    if (typeof window !== "undefined") {
+      document.body.style.overflow = '';
+    }
   };
 
   const handleStatusUpdate = async () => {

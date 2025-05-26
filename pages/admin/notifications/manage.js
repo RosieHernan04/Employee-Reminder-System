@@ -166,7 +166,7 @@ export default function NotificationSettings() {
 
   return (
     <Layout>
-      <div className="container py-4">
+      <div className="container py-4 notification-bg">
         <div className="row">
           <div className="col-12">
             <div className="mb-4">
@@ -174,7 +174,7 @@ export default function NotificationSettings() {
                 Back to Meeting Management
               </Button>
             </div>
-            <h1 className="mb-4 text-primary">
+            <h1 className="mb-4 text-primary notification-title">
               <SettingOutlined className="me-2" />
               Notification Settings
             </h1>
@@ -184,13 +184,13 @@ export default function NotificationSettings() {
               <div className="col-md-6">
                 <Card 
                   title={
-                    <>
+                    <span className="notification-card-title">
                       <SettingOutlined className="me-2" />
                       General Settings
-                    </>
+                    </span>
                   } 
                   bordered={false} 
-                  className="shadow-sm"
+                  className="shadow-sm notification-card"
                 >
                   <div className="mb-3">
                     <label className="form-label">Default Notification Channel</label>
@@ -229,13 +229,13 @@ export default function NotificationSettings() {
               <div className="col-md-6">
                 <Card 
                   title={
-                    <>
+                    <span className="notification-card-title">
                       <BellOutlined className="me-2" />
                       Meeting Reminders
-                    </>
+                    </span>
                   } 
                   bordered={false} 
-                  className="shadow-sm"
+                  className="shadow-sm notification-card"
                 >
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <h6 className="mb-0">Enable Meeting Reminders</h6>
@@ -268,13 +268,13 @@ export default function NotificationSettings() {
               <div className="col-md-6">
                 <Card 
                   title={
-                    <>
+                    <span className="notification-card-title">
                       <ClockCircleOutlined className="me-2" />
                       Deadline Reminders
-                    </>
+                    </span>
                   } 
                   bordered={false} 
-                  className="shadow-sm"
+                  className="shadow-sm notification-card"
                 >
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <h6 className="mb-0">Enable Deadline Reminders</h6>
@@ -307,13 +307,13 @@ export default function NotificationSettings() {
               <div className="col-md-6">
                 <Card 
                   title={
-                    <>
+                    <span className="notification-card-title">
                       <PushpinOutlined className="me-2" />
                       Task Reminders
-                    </>
+                    </span>
                   } 
                   bordered={false} 
-                  className="shadow-sm"
+                  className="shadow-sm notification-card"
                 >
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <h6 className="mb-0">Enable Task Reminders</h6>
@@ -346,13 +346,13 @@ export default function NotificationSettings() {
               <div className="col-md-6">
                 <Card 
                   title={
-                    <>
+                    <span className="notification-card-title">
                       <MailOutlined className="me-2" />
                       Notification Channels
-                    </>
+                    </span>
                   } 
                   bordered={false} 
-                  className="shadow-sm"
+                  className="shadow-sm notification-card"
                 >
                   <div className="mb-4">
                     <h6>Email Notifications</h6>
@@ -425,13 +425,13 @@ export default function NotificationSettings() {
               <div className="col-md-6">
                 <Card 
                   title={
-                    <>
+                    <span className="notification-card-title">
                       <ClockCircleOutlined className="me-2" />
                       Do Not Disturb
-                    </>
+                    </span>
                   } 
                   bordered={false} 
-                  className="shadow-sm"
+                  className="shadow-sm notification-card"
                 >
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <h6 className="mb-0">Enable Do Not Disturb</h6>
@@ -478,6 +478,7 @@ export default function NotificationSettings() {
                 onClick={saveSettings}
                 loading={saving}
                 disabled={loading}
+                className="notification-save-btn"
               >
                 Save Settings
               </Button>
@@ -487,13 +488,37 @@ export default function NotificationSettings() {
       </div>
 
       <style jsx>{`
-        .card {
-          border-radius: 15px;
-          transition: all 0.3s ease;
+        .notification-bg {
+          background: linear-gradient(135deg, #e0f7fa 0%, #f8fffc 100%);
+          border-radius: 24px;
+          min-height: 100vh;
         }
-        .card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        .notification-title {
+          font-weight: 700;
+          letter-spacing: 1px;
+          background: linear-gradient(90deg, #2d8659 30%, #4caf50 70%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .notification-card {
+          border-radius: 18px !important;
+          background: rgba(255,255,255,0.85) !important;
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10) !important;
+          border: 1px solid rgba(76,175,80,0.10) !important;
+          transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .notification-card:hover {
+          box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.18) !important;
+          transform: translateY(-2px) scale(1.01);
+        }
+        .notification-card-title {
+          font-size: 1.15rem;
+          font-weight: 600;
+          color: #2d8659;
+          letter-spacing: 0.5px;
+        }
+        .form-label, .form-check-label, .ant-switch, .ant-picker {
+          font-size: 1rem;
         }
         .form-check-input:checked {
           background-color: #2d8659;
@@ -501,10 +526,22 @@ export default function NotificationSettings() {
         }
         .form-select:focus, .form-control:focus {
           border-color: #2d8659;
-          box-shadow: 0 0 0 0.25rem rgba(45, 134, 89, 0.25);
+          box-shadow: 0 0 0 0.25rem rgba(45, 134, 89, 0.15);
         }
         .ant-switch-checked {
           background-color: #2d8659 !important;
+        }
+        .notification-save-btn {
+          border-radius: 12px;
+          font-weight: 600;
+          font-size: 1.1rem;
+          padding: 10px 32px;
+          background: linear-gradient(90deg, #2d8659 0%, #4caf50 100%);
+          border: none;
+          box-shadow: 0 4px 16px rgba(45, 134, 89, 0.10);
+        }
+        .notification-save-btn:hover {
+          background: linear-gradient(90deg, #388e3c 0%, #43a047 100%);
         }
         .card-header {
           background-color: #f8f9fa;
@@ -518,4 +555,4 @@ export default function NotificationSettings() {
       `}</style>
     </Layout>
   );
-} 
+}

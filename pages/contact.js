@@ -120,21 +120,21 @@ export default function Contact() {
                     <div className="contact-info">
                       <div className="mb-4">
                         <h4 className="text-success">Address</h4>
-                        <p className="fs-5">123 Cooperative Street, Your City, Philippines</p>
+                        <p className="fs-5">Blk L5B Governor's Hills Biclatan General Trias City, Cavite</p>
                       </div>
                       <div className="mb-4">
                         <h4 className="text-success">Email</h4>
-                        <p className="fs-5">info@adecmpc.com</p>
+                        <p className="fs-5">ademc1986@yahoo.com</p>
                       </div>
                       <div className="mb-4">
                         <h4 className="text-success">Phone</h4>
-                        <p className="fs-5">+63 123 456 7890</p>
+                        <p className="fs-5">046-886-4446</p>
                       </div>
                       <div>
                         <h4 className="text-success">Office Hours</h4>
                         <p className="fs-5">
                           Monday - Friday: 8:00 AM - 5:00 PM<br />
-                          Saturday: 8:00 AM - 12:00 PM<br />
+                          Saturday: Closed<br />
                           Sunday: Closed
                         </p>
                       </div>

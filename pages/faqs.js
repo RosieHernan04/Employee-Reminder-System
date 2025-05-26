@@ -7,23 +7,49 @@ export default function FAQs() {
   const faqs = [
     {
       question: "What is ADECMPC?",
-      answer: "ADECMPC (Agricultural Development and Economic Cooperative Multi-Purpose Cooperative) is a cooperative organization dedicated to providing financial services and sustainable solutions to its members."
+      answer: "ADECMPC (Analog Devices Employees and Community Multipurpose Cooperative) is a multi-awarded cooperative in Cavite and General Trias, serving members for over 39 years. We provide financial services, loans, and community-driven solutions to help you achieve your dreams."
     },
     {
-      question: "How can I become a member?",
-      answer: "To become a member, you need to submit an application form, provide valid ID, pay the membership fee, and attend an orientation session. Visit our office or contact us for more details."
+      question: "How can ADECMPC help me achieve my dreams?",
+      answer: "Whether you want to buy a house, a car, a big TV, or need funds for your plans, ADECMPC offers a range of loans and financial services tailored to your modern needs. Our mission is to help you grow your tomorrow, today."
     },
     {
-      question: "What are the benefits of joining ADECMPC?",
-      answer: "Members enjoy various benefits including access to loans, savings programs, dividends, training programs, and participation in cooperative activities and decision-making."
+      question: "What types of loans does ADECMPC offer?",
+      answer: (
+        <span>
+          <strong>Car Loans:</strong> Loan up to ₱2,000,000.00, payable from 24 to 60 months, with an interest rate of only 0.36%.<br />
+          <strong>Housing Loans:</strong> Loan up to ₱1,000,000.00 with low interest rates to help you own your dream home.<br />
+          <strong>Personal Loans:</strong> For purchases like appliances, gadgets, or other needs.<br />
+          <strong>Long-Term Loans:</strong> For bigger plans and a brighter future, with low interest rates.
+        </span>
+      )
     },
     {
-      question: "What types of loans do you offer?",
-      answer: "We offer various types of loans including business loans, agricultural loans, personal loans, and emergency loans. Each type has specific terms and requirements."
+      question: "How long has ADECMPC been operating?",
+      answer: "ADECMPC has been helping members turn their dreams into reality for over 39 years. With decades of experience, we know how to make things happen."
     },
     {
-      question: "How do I apply for a loan?",
-      answer: "Loan application requires membership, completion of application forms, submission of required documents, and meeting our credit criteria. Contact our loan officers for detailed information."
+      question: "How many members does ADECMPC have?",
+      answer: "ADECMPC has over 3,500 members who enjoy exclusive benefits and perks."
+    },
+    {
+      question: "How do I become a member of ADECMPC?",
+      answer: (
+        <span>
+          Sign up and become a member today to enjoy all the benefits and perks that only ADECMPC members receive.<br />
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSckTQPSnD3GitG3bQnMp5P_F7jLkCcjwP1pV21NAP9elVjgxQ/viewform" target="_blank" rel="noopener noreferrer">
+            Click here to access the membership application form.
+          </a>
+        </span>
+      )
+    },
+    {
+      question: "Why should I trust ADECMPC?",
+      answer: "With more than 39 years of experience and a Hall of Fame award for Outstanding Large-Scale Cooperative in Cavite, ADECMPC is a trusted partner in helping you achieve your goals."
+    },
+    {
+      question: "What makes ADECMPC different from other cooperatives?",
+      answer: "ADECMPC is recognized for its diversified services, multi-awarded excellence, and commitment to both employees and the community. We offer a dynamic, professional environment and personalized support for every member."
     }
   ];
 
@@ -209,4 +235,4 @@ export default function FAQs() {
       `}</style>
     </div>
   );
-} 
+}
