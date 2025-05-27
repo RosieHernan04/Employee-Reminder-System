@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { format } from "date-fns";
-import { db } from "../../firebase";
+import { db } from 'lib/firebase';
 import Image from 'next/image';
 
 
