@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from 'components/MainLayout/Layout';
-import { db } from '../../lib/firebase';
+import { db } from 'lib/firebase';
 import { collection, query, orderBy, onSnapshot, where } from 'firebase/firestore';
 import { format } from 'date-fns';
 import { Bar } from 'react-chartjs-2';

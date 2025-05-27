@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Layout from 'components/MainLayout/Layout';
-import { db } from '../../lib/firebase';
+import { db } from 'lib/firebase';
 import { collection, query, where, getDocs, orderBy, limit, onSnapshot, Timestamp } from 'firebase/firestore';
 import RecentActivityFeed from '../../components/dashboard/RecentActivityFeed';
 import { fetchDashboardData } from '../../lib/fetchDashboardData';

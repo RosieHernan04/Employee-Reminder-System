@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { collection, query, where, getDocs, onSnapshot, Timestamp } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
+import { db } from 'lib/firebase';
 import {
   BarChart,
   Bar,
