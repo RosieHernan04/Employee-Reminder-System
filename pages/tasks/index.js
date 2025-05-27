@@ -1,4 +1,5 @@
-import Layout from '../../components/Layout/Layout'; // lowercase 'layout' variable name
+import Layout from '../../components/Layout/Layout';
+
 
 
 const TaskList = () => {
