@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import Layout from '../../components/Layout/Layout'
+import Layout from '../../components/Layout/Layout';
 import { collection, query, orderBy, onSnapshot, where, doc, updateDoc, addDoc } from 'firebase/firestore';
 import { db } from '../../dataconnect/firebase';
 import MeetingStatus from '../../components/MeetingStatus';
