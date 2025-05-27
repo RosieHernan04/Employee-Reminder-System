@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../components/Layout/layout';
+import Layout from '../../components/Layout/Layout';
 import { collection, query, where, getDocs, orderBy, limit, Timestamp } from 'firebase/firestore';
 import { db } from '../../dataconnect/firebase';
 import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth, subMonths } from 'date-fns';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import Link from 'next/link';
 
 // PDF Styles
 const styles = StyleSheet.create({
@@ -429,7 +430,7 @@ export default function Reports() {
         <nav aria-label="breadcrumb" className="mb-4">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="/admin/dashboard">Dashboard</a>
+              <Link href="/admin/dashboard">Dashboard</Link>
             </li>
             <li className="breadcrumb-item active">Reports</li>
           </ol>

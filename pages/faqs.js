@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function FAQs() {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -83,9 +84,11 @@ export default function FAQs() {
               justifyContent: "center",
               background: "transparent"
             }}>
-              <img
+              <Image
                 src="/487083768_557976863971305_3421396436649360911_n.jpg"
                 alt="ADECMPC Logo"
+                width={100}
+                height={100}
                 style={{
                   height: "100%",
                   width: "100%",

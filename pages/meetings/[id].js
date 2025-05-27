@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import Layout from '../../components/Layout/layout';
+import Layout from '../../components/Layout/Layout';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../dataconnect/firebase';
 

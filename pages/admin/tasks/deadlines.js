@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../../components/Layout/layout';
+import Layout from '../../../components/Layout/Layout';
 import { collection, query, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../dataconnect/firebase';
+import Link from 'next/link';
 
 export default function ManageDeadlines() {
   const router = useRouter();
@@ -95,10 +96,10 @@ export default function ManageDeadlines() {
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="/admin/dashboard">Dashboard</a>
+                  <Link href="/admin/dashboard">Dashboard</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <a href="/admin/usermanagement">Task Management</a>
+                  <Link href="/admin/usermanagement">Task Management</Link>
                 </li>
                 <li className="breadcrumb-item active">Manage Deadlines</li>
               </ol>

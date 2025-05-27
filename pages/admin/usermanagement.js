@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import Layout from '../../components/Layout/layout';
+import Layout from '../../components/Layout/Layout';
 import { collection, query, orderBy, getDocs, onSnapshot, where, collectionGroup, doc, getDoc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../dataconnect/firebase';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
@@ -12,6 +12,7 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import axios from 'axios';
+import Link from 'next/link';
 
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
@@ -604,7 +605,7 @@ export default function TaskManagement() {
         <nav aria-label="breadcrumb" className="mb-4">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="/admin/dashboard">Dashboard</a>
+              <Link href="/admin/dashboard">Dashboard</Link>
             </li>
             <li className="breadcrumb-item active">Task Management</li>
           </ol>

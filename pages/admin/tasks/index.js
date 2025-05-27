@@ -1,7 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/router';
-import Layout from '../../../components/Layout/layout';
+import Link from 'next/link';
+import Layout from '../../components/Layout/Layout';
+
 
 export default function TaskManagement() {
   const router = useRouter();
@@ -12,7 +14,7 @@ export default function TaskManagement() {
         <nav aria-label="breadcrumb" className="mb-4">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="/admin/dashboard">Dashboard</a>
+              <Link href="/admin/dashboard">Dashboard</Link>
             </li>
             <li className="breadcrumb-item active">Task Management</li>
           </ol>

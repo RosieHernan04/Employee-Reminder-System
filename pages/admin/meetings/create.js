@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../../components/Layout/layout';
+import Layout from '../../../components/Layout/Layout';
 import { db } from '../../../dataconnect/firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import Link from 'next/link';
 
 export default function CreateMeeting() {
   const router = useRouter();
@@ -63,10 +64,10 @@ export default function CreateMeeting() {
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="/admin/dashboard">Dashboard</a>
+                  <Link href="/admin/dashboard">Dashboard</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <a href="/admin/meetingmanagement">Meeting Management</a>
+                  <Link href="/admin/meetingmanagement">Meeting Management</Link>
                 </li>
                 <li className="breadcrumb-item active">Schedule Meeting</li>
               </ol>

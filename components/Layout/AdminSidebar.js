@@ -62,15 +62,18 @@ export default function AdminSidebar() {
     >
       <div className="text-center mb-4">
         <div className="mb-3">
-          <img
+          <Image
             src="/487083768_557976863971305_3421396436649360911_n.jpg"
             alt="ADECMPC Logo"
-            style={{ 
-              width: "100px", 
-              height: "100px", 
+            width={100}
+            height={100}
+            style={{
+              width: "100px",
+              height: "100px",
               borderRadius: "50%",
               border: "3px solid rgba(255,255,255,0.2)",
-              boxShadow: "0 4px 8px rgba(0,0,0,0.2)"
+              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+              objectFit: "cover"
             }}
           />
         </div>

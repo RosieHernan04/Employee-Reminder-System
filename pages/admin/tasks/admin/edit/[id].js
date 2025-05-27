@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../../../../components/Layout/layout';
+import Layout from '../../../../../components/Layout/Layout';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../../../dataconnect/firebase';
+import Link from 'next/link';
 
 export default function EditAdminTask() {
   const router = useRouter();
@@ -107,10 +108,10 @@ export default function EditAdminTask() {
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="/admin/dashboard">Dashboard</a>
+                  <Link href="/admin/dashboard">Dashboard</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <a href="/admin/tasks/admin/edit-delete">Manage Admin Tasks</a>
+                  <Link href="/admin/tasks/admin/edit-delete">Manage Admin Tasks</Link>
                 </li>
                 <li className="breadcrumb-item active">Edit Task</li>
               </ol>

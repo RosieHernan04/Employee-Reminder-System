@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Contact() {
   return (
@@ -31,12 +32,14 @@ export default function Contact() {
               justifyContent: "center",
               background: "transparent"
             }}>
-              <img
+              <Image
                 src="/487083768_557976863971305_3421396436649360911_n.jpg"
                 alt="ADECMPC Logo"
+                width={100}
+                height={100}
                 style={{
-                  height: "100%",
                   width: "100%",
+                  height: "100%",
                   objectFit: "cover"
                 }}
               />
@@ -120,7 +123,7 @@ export default function Contact() {
                     <div className="contact-info">
                       <div className="mb-4">
                         <h4 className="text-success">Address</h4>
-                        <p className="fs-5">Blk L5B Governor's Hills Biclatan General Trias City, Cavite</p>
+                        <p className="fs-5">Blk L5B Governor&apos;s Hills Biclatan General Trias City, Cavite</p>
                       </div>
                       <div className="mb-4">
                         <h4 className="text-success">Email</h4>

@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { useUser } from "../dataconnect/context/UserContext";
 import { getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 import { getMessaging, getToken } from "firebase/messaging";
+import Image from 'next/image';
+
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -192,11 +194,12 @@ export default function Login() {
       }}>
         <div className="container-fluid">
           <a className="navbar-brand d-flex align-items-center" href="#">
-            <img
+            <Image
               src="/487083768_557976863971305_3421396436649360911_n.jpg"
               alt="ADECMPC Logo"
+              width={45}
+              height={45}
               style={{ 
-                height: "45px", 
                 marginRight: "10px",
                 borderRadius: "50%",
                 background: "transparent"
@@ -251,12 +254,12 @@ export default function Login() {
             border: '2px solid rgba(255, 255, 255, 0.3)'
           }}>
             <div className="text-center mb-4">
-              <img
+              <Image
                 src="/487083768_557976863971305_3421396436649360911_n.jpg"
                 alt="ADECMPC Logo"
+                width={80}
+                height={80}
                 style={{
-                  width: '80px',
-                  height: '80px',
                   marginBottom: '20px',
                   borderRadius: '50%',
                   border: '2px solid rgba(255, 255, 255, 0.5)'
@@ -408,7 +411,7 @@ export default function Login() {
                   fontSize: '0.95rem',
                   textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}>
-                  Don't have an account?{' '}
+                  Don&apos;t have an account?{' '}
                   <Link href="/signup" style={{ 
                     color: '#fff',
                     textDecoration: 'none',

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, Timestamp, onSnapshot } from 'firebase/firestore';
-import Layout from '../../components/Layout/layout';
+import Layout from '../../components/Layout/Layout';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
@@ -14,6 +14,8 @@ import getDay from 'date-fns/getDay';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { CheckCircleIcon, TrashIcon, PencilIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
+
 
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
@@ -654,12 +656,12 @@ export default function Meetings() {
           borderRadius: '20px 20px 0 0'
         }}>
           <div className="d-flex align-items-center">
-            <img
+            <Image
               src="/487083768_557976863971305_3421396436649360911_n.jpg"
               alt="ADECMPC Logo"
+              width={40}
+              height={40}
               style={{
-                width: '40px',
-                height: '40px',
                 borderRadius: '50%',
                 marginRight: '15px',
                 border: '2px solid rgba(255, 255, 255, 0.5)',

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Layout from '../../components/Layout/layout';
+import Layout from '../../components/Layout/Layout';
 import { db } from '../../lib/firebase';
 import { collection, query, where, getDocs, orderBy, limit, onSnapshot, Timestamp } from 'firebase/firestore';
 import RecentActivityFeed from '../../components/dashboard/RecentActivityFeed';

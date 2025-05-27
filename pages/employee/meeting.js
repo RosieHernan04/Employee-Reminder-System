@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { format } from "date-fns";
 import { db } from "../../firebase";
+import Image from 'next/image';
+
 
 const MeetingPage = ({ user }) => {
   const [allMeetings, setAllMeetings] = useState([]);

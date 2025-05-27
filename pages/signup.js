@@ -3,6 +3,9 @@ import Link from "next/link";
 import { auth, db } from "../lib/firebase"; // Import Firebase
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import Image from 'next/image';
+
+
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -67,11 +70,12 @@ export default function Signup() {
       }}>
         <div className="container-fluid">
           <a className="navbar-brand d-flex align-items-center" href="#">
-            <img
+            <Image
               src="/487083768_557976863971305_3421396436649360911_n.jpg"
               alt="ADECMPC Logo"
+              width={45}
+              height={45}
               style={{ 
-                height: "45px", 
                 marginRight: "10px",
                 borderRadius: "50%",
                 background: "transparent"
@@ -126,18 +130,18 @@ export default function Signup() {
             border: '2px solid rgba(255, 255, 255, 0.3)'
           }}>
             <div className="text-center mb-4">
-              <img
-                src="/487083768_557976863971305_3421396436649360911_n.jpg"
-                alt="ADECMPC Logo"
-                style={{
-                  width: '80px',
-                  height: '80px',
-                  marginBottom: '20px',
-                  borderRadius: '50%',
-                  border: '3px solid rgba(255, 255, 255, 0.8)',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
-                }}
-              />
+            <Image
+              src="/487083768_557976863971305_3421396436649360911_n.jpg"
+              alt="ADECMPC Logo"
+              width={80}
+              height={80}
+              style={{
+                marginBottom: '20px',
+                borderRadius: '50%',
+                border: '3px solid rgba(255, 255, 255, 0.8)',
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
+              }}
+            />
               <h2 style={{
                 color: '#fff',
                 fontSize: '1.8rem',

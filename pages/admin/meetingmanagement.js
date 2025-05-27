@@ -2,10 +2,11 @@
 
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import Layout from '../../components/Layout/layout';
+import Layout from '../../components/Layout/Layout';
 import { collection, query, orderBy, onSnapshot, where, doc, updateDoc, addDoc } from 'firebase/firestore';
 import { db } from '../../dataconnect/firebase';
 import MeetingStatus from '../../components/MeetingStatus';
+import Link from 'next/link';
 
 export default function MeetingManagement() {
   const router = useRouter();
@@ -239,7 +240,7 @@ export default function MeetingManagement() {
         <nav aria-label="breadcrumb" className="mb-4">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="/admin/dashboard">Dashboard</a>
+              <Link href="/admin/dashboard">Dashboard</Link>
             </li>
             <li className="breadcrumb-item active">Meeting Management</li>
           </ol>

@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { db } from '../../../lib/firebase';
 import { collection, query, orderBy, getDocs, doc, deleteDoc } from 'firebase/firestore';
-import Layout from '../../../components/Layout/layout';
+import Layout from '../../../components/Layout/Layout';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 // Dynamically import the modal components with no SSR
 const TaskEditModal = dynamic(() => import('../../../components/modals/TaskEditModal'), { ssr: false });
@@ -126,10 +127,10 @@ export default function EditDeleteEmployeeTasks() {
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="/admin/dashboard">Dashboard</a>
+                  <Link href="/admin/dashboard">Dashboard</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <a href="/admin/usermanagement">Task Management</a>
+                  <Link href="/admin/usermanagement">Task Management</Link>
                 </li>
                 <li className="breadcrumb-item active">Edit/Delete Employee Tasks</li>
               </ol>

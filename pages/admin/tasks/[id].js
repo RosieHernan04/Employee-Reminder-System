@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import Layout from '../../../components/Layout/layout';
 import { db } from '../../../lib/firebase';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import Link from 'next/link';
+
 
 export default function TaskList() {
   const router = useRouter();
@@ -58,10 +60,10 @@ export default function TaskList() {
         <nav aria-label="breadcrumb" className="mb-4">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="/admin/dashboard">Dashboard</a>
+              <Link href="/admin/dashboard">Dashboard</Link>
             </li>
             <li className="breadcrumb-item">
-              <a href="/admin/usermanagement">User Management</a>
+              <Link href="/admin/usermanagement">User Management</Link>
             </li>
             <li className="breadcrumb-item active">Tasks</li>
           </ol>

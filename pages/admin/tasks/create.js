@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../../components/Layout/layout';
+import Layout from '../../../components/Layout/Layout';
 import { db } from '../../../lib/firebase.ts';
 import { collection, addDoc } from 'firebase/firestore';
 import { logAdminActivity, ADMIN_ACTIONS } from '../../../utils/adminLogger';

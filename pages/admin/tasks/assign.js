@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../../components/Layout/layout';
+import Layout from '../../../components/Layout/Layout';
 import { db } from '../../../lib/firebase.ts';
 import { collection, query, where, getDocs, doc, orderBy, deleteDoc } from 'firebase/firestore';
 import { assignTaskToEmployee } from '../../../utils/taskAssignment';

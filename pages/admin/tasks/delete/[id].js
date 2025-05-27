@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../../components/Layout/layout';
+import Layout from '../../../components/Layout/Layout';
+import Link from 'next/link';
 
 const DeleteTaskPage = ({ task }) => {
   const router = useRouter();
@@ -27,10 +28,10 @@ const DeleteTaskPage = ({ task }) => {
         <nav aria-label="breadcrumb" className="mb-4">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="/admin/dashboard">Dashboard</a>
+              <Link href="/admin/dashboard/">Dashboard</Link>
             </li>
             <li className="breadcrumb-item">
-              <a href="/admin/usermanagement">User Management</a>
+              <Link href="/admin/usermanagement">User Management</Link>
             </li>
             <li className="breadcrumb-item active">Delete Task</li>
           </ol>

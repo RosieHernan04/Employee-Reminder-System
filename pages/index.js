@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Image from 'next/image';
+
 
 export default function Home() {
   return (
@@ -31,9 +33,11 @@ export default function Home() {
               justifyContent: "center",
               background: "transparent"
             }}>
-              <img
+              <Image
                 src="/487083768_557976863971305_3421396436649360911_n.jpg"
                 alt="ADECMPC Logo"
+                width={100}
+                height={100}
                 style={{
                   height: "100%",
                   width: "100%",
@@ -222,13 +226,12 @@ export default function Home() {
                   backdropFilter: 'blur(10px)',
                 }}
               >
-                <img
+                <Image
                   src="/pngtree-money-bag-with-plant-growing-from-coins-png-image_14332250.png"
                   alt="Vision"
-                  className="img-fluid"
+                  width={200}
+                  height={200} // Adjust as needed
                   style={{
-                    height: "100%",
-                    width: "100%",
                     objectFit: "contain",
                     padding: "15px",
                   }}
@@ -297,13 +300,12 @@ export default function Home() {
                   backdropFilter: 'blur(10px)',
                 }}
               >
-                <img
+                <Image
                   src="/Picture2.png"
                   alt="Mission"
-                  className="img-fluid"
+                  width={300} // Set based on your design
+                  height={300}
                   style={{
-                    height: "100%",
-                    width: "100%",
                     objectFit: "contain",
                     padding: "15px",
                     mixBlendMode: "multiply",

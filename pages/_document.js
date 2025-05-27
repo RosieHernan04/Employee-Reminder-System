@@ -1,4 +1,6 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import Script from 'next/script';
+
 
 export default function Document() {
   return (
@@ -25,8 +27,11 @@ export default function Document() {
         <meta name="description" content="Task Reminder System for ADECMPC" />
         <meta name="author" content="ADECMPC Team" />
 
-        {/* Add Google API script */}
-        <script src="https://apis.google.com/js/api.js" />
+<Script
+  src="https://apis.google.com/js/api.js"
+  strategy="beforeInteractive"
+/>
+
       </Head>
       <body>
         <Main />

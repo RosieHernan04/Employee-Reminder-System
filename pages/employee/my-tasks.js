@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase';
 import { collection, query, where, onSnapshot, addDoc, deleteDoc, doc, updateDoc, Timestamp, getDocs, orderBy, limit } from 'firebase/firestore';
-import Layout from '../../components/Layout/layout';
+import Layout from '../../components/Layout/Layout';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { CheckCircleIcon, TrashIcon, PencilIcon } from '@heroicons/react/24/outline';
 import format from 'date-fns/format';

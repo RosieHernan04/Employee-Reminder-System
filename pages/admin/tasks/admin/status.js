@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../../../components/Layout/layout';
+import Layout from '../../../../components/Layout/Layout';
 import {
   collection,
   query,

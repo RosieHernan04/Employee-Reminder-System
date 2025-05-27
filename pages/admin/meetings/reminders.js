@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../../components/Layout/layout';
+import Layout from '../../../components/Layout/Layout.js';
 import { db } from '../../../lib/firebase.ts';
 import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import Link from 'next/link';
 
 export default function MeetingReminders() {
   const router = useRouter();
@@ -79,10 +80,10 @@ export default function MeetingReminders() {
         <nav aria-label="breadcrumb" className="mb-4">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="/admin/dashboard">Dashboard</a>
+              <Link href="/admin/dashboard">Dashboard</Link>
             </li>
             <li className="breadcrumb-item">
-              <a href="/admin/usermanagement">User Management</a>
+              <Link href="/admin/usermanagement">User Management</Link>
             </li>
             <li className="breadcrumb-item active">Meeting Reminders</li>
           </ol>

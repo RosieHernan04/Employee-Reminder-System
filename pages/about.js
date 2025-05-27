@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Image from 'next/image';
+
 
 export default function About() {
   return (
@@ -31,15 +33,14 @@ export default function About() {
               justifyContent: "center",
               background: "transparent"
             }}>
-              <img
-                src="/487083768_557976863971305_3421396436649360911_n.jpg"
-                alt="ADECMPC Logo"
-                style={{
-                  height: "100%",
-                  width: "100%",
-                  objectFit: "cover"
-                }}
-              />
+              <div style={{ position: "relative", width: "100px", height: "100px", borderRadius: "50%", overflow: "hidden" }}>
+                <Image
+                  src="/487083768_557976863971305_3421396436649360911_n.jpg"
+                  alt="ADECMPC Logo"
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
             </div>
             <span className="text-success fw-bold">ADECMPC</span>
           </Link>
@@ -125,8 +126,8 @@ export default function About() {
                   <h4 className="text-success mb-2" style={{ fontWeight: 600 }}>Foundation and Early Years</h4>
                   <ul>
                     <li><strong>September 1986:</strong> The Analog Devices Employees Credit Cooperative (ADECC) was founded to assist regular employees of Analog Devices Philippines, Inc. (ADPI) in enhancing their livelihood. The cooperative aimed to provide financial services that would cater to the needs of its members.</li>
-                    <li><strong>Founding Members:</strong> The founding Board of Directors comprised individuals who were pivotal in shaping the cooperative's mission, including Ms. Aysa Redondo (Chairman), Susan Capuli, Shirley Hulipas, Ane Ortilla, Oscar Salomon, Rudy Rillera, Louie David, Fredie Albania, Cora Toledo, Nancy Refe, and Dino Del Rosario. Their combined efforts established a strong foundation for the cooperative.</li>
-                    <li><strong>Initial Funding:</strong> ADPI supported ADECC by extending a cash credit of ₱100,000.00 as seed capital, interest-free, to facilitate the cooperative’s early operations. This funding was crucial in helping the cooperative start lending to its members.</li>
+                    <li><strong>Founding Members:</strong> The founding Board of Directors comprised individuals who were pivotal in shaping the cooperative&apos;s mission, including Ms. Aysa Redondo (Chairman), Susan Capuli, Shirley Hulipas, Ane Ortilla, Oscar Salomon, Rudy Rillera, Louie David, Fredie Albania, Cora Toledo, Nancy Refe, and Dino Del Rosario. Their combined efforts established a strong foundation for the cooperative.</li>
+                    <li><strong>Initial Funding:</strong> ADPI supported ADECC by extending a cash credit of ₱100,000.00 as seed capital, interest-free, to facilitate the cooperative&apos;s early operations. This funding was crucial in helping the cooperative start lending to its members.</li>
                   </ul>
                 </div>
                 <div className="mb-4">
@@ -140,7 +141,7 @@ export default function About() {
                 <div className="mb-4">
                   <h4 className="text-success mb-2" style={{ fontWeight: 600 }}>Formal Recognition and Expansion</h4>
                   <ul>
-                    <li><strong>December 11, 1996:</strong> ADECC was formally registered with the Cooperative Development Authority (CDA), which granted it legal personality. This registration enhanced the cooperative's credibility and stability, allowing it to operate more confidently in the community.</li>
+                    <li><strong>December 11, 1996:</strong> ADECC was formally registered with the Cooperative Development Authority (CDA), which granted it legal personality. This registration enhanced the cooperative&apos;s credibility and stability, allowing it to operate more confidently in the community.</li>
                     <li><strong>Board of Directors at Registration:</strong> During the registration process, the Board of Directors included Cesar Moll (Chairman), Pete Agno (Vice-Chairman), and other notable members like Jimmy Muncal, Lucito David, Josefina Bernabe, Novea Aldea, Teresita Uy, Romeo Gracilla, Neo Manganiman, and Rosalinda Lim.</li>
                     <li><strong>November 12, 2009:</strong> The cooperative was registered under Republic Act No. 9520, also known as the Cooperative Code of 2008, with Registration No. 9520-16002410, further solidifying its status.</li>
                   </ul>
@@ -162,7 +163,7 @@ export default function About() {
                 <div className="mb-4">
                   <h4 className="text-success mb-2" style={{ fontWeight: 600 }}>Significant Milestones</h4>
                   <ul>
-                    <li><strong>1986:</strong> Establishment of ADECC to support employees' financial needs.</li>
+                    <li><strong>1986:</strong> Establishment of ADECC to support employees&apos; financial needs.</li>
                     <li><strong>1988:</strong> Declaration of the first dividend and patronage refund.</li>
                     <li><strong>1996:</strong> Formal registration with the CDA, gaining legal personality.</li>
                     <li><strong>2009:</strong> Registration under the Cooperative Code of 2008.</li>
