@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { db } from '../../../lib/firebase';
 import { collection, query, orderBy, getDocs, doc, deleteDoc } from 'firebase/firestore';
-import Layout from '../../../components/Layout/Layout';
+import Layout from 'components/MainLayout/Layout';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 

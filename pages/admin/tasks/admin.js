@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-import Layout from '../../components/Layout/Layout';
+import Layout from 'components/MainLayout/Layout';
 
 const AdminTasks = () => {
   const router = useRouter();

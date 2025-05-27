@@ -1,6 +1,6 @@
 import React from "react";
-import Sidebar from "./Sidebar";
-import AdminSidebar from "./AdminSidebar";
+import Sidebar from "../Layout/Sidebar";
+import AdminSidebar from "../Layout/AdminSidebar";
 import { useUser } from "../../dataconnect/context/UserContext";
 
 export default function Layout({ children }) {

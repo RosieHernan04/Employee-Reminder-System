@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../../components/Layout/Layout';
+import Layout from 'components/MainLayout/Layout';
 import Link from 'next/link';
 
 const DeleteTaskPage = ({ task }) => {
