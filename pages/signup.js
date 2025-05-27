@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { auth, db } from "../lib/firebase"; // Import Firebase
+import { auth, db } from 'lib/firebase';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import Image from 'next/image';

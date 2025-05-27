@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from 'components/MainLayout/Layout';
 import { Switch, Card, Form, Button, TimePicker, Select, message } from 'antd';
 import { BellOutlined, ClockCircleOutlined, SettingOutlined, MailOutlined, PushpinOutlined } from '@ant-design/icons';
-import { auth, db } from '../../../lib/firebase';
+import { auth, db } from 'lib/firebase';
 import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 
 export default function NotificationSettings() {

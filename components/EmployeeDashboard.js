@@ -10,7 +10,7 @@ import {
   onSnapshot,
   Timestamp
 } from 'firebase/firestore';
-import { auth, db } from '../lib/firebase';        // adjust path
+import { auth, db } from 'lib/firebase';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { startOfDay, endOfDay, subDays, format } from 'date-fns';
 import Layout from './Layout/layout';              // adjust path
