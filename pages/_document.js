@@ -26,6 +26,8 @@ export default function Document() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Task Reminder System for ADECMPC" />
         <meta name="author" content="ADECMPC Team" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 
 <Script
   src="https://apis.google.com/js/api.js"
