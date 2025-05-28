@@ -23,6 +23,7 @@ export default function EditDeleteMeeting() {
   });
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [meetingToDelete, setMeetingToDelete] = useState(null);
+  const [alert, setAlert] = useState({ type: '', message: '' });
 
   useEffect(() => {
     fetchMeetings();
@@ -56,7 +57,7 @@ export default function EditDeleteMeeting() {
 
   const handleEdit = (meeting) => {
     if (meeting.status === 'completed') {
-      alert('Cannot edit a completed meeting');
+      setAlert({ type: 'error', message: 'Cannot edit a completed meeting' });
       return;
     }
     setEditingMeeting(meeting);
@@ -82,6 +83,7 @@ export default function EditDeleteMeeting() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setAlert({ type: '', message: '' });
     try {
       const dateObj = new Date(formData.date);
       const [hours, minutes] = (formData.time || '09:00').split(':').map(Number);
@@ -96,12 +98,12 @@ export default function EditDeleteMeeting() {
         duration: formData.duration,
         updatedAt: new Date()
       });
-      alert('Meeting updated successfully!');
+      setAlert({ type: 'success', message: 'Meeting updated successfully!' });
       setEditingMeeting(null);
       fetchMeetings();
     } catch (error) {
       console.error('Error updating meeting:', error);
-      setError('Error updating meeting');
+      setAlert({ type: 'error', message: 'Error updating meeting' });
     } finally {
       setLoading(false);
     }
@@ -115,15 +117,15 @@ export default function EditDeleteMeeting() {
 
   const confirmDelete = async () => {
     if (!meetingToDelete) return;
-    
     setLoading(true);
+    setAlert({ type: '', message: '' });
     try {
       await deleteDoc(doc(db, 'meetings', meetingToDelete.id));
-      alert('Meeting deleted successfully!');
+      setAlert({ type: 'success', message: 'Meeting deleted successfully!' });
       fetchMeetings();
     } catch (error) {
       console.error('Error deleting meeting:', error);
-      setError('Error deleting meeting');
+      setAlert({ type: 'error', message: 'Error deleting meeting' });
     } finally {
       setLoading(false);
       setShowDeleteModal(false);
@@ -148,6 +150,24 @@ export default function EditDeleteMeeting() {
   return (
     <Layout>
       <div className="container py-4" style={{ backgroundColor: '#ffffff' }}>
+        {/* Custom Alert */}
+        {alert.message && (
+          <div
+            className={`alert alert-${alert.type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`}
+            role="alert"
+            style={{ marginBottom: "1rem" }}
+          >
+            {alert.message}
+            <button
+              type="button"
+              className="btn-close"
+              aria-label="Close"
+              onClick={() => setAlert({ type: '', message: '' })}
+              style={{ float: 'right', border: 'none', background: 'none' }}
+            ></button>
+          </div>
+        )}
+
         <h1 className="text-center mb-4 title">
           <i className="bi bi-calendar-check me-2"></i>
           Manage Meetings
