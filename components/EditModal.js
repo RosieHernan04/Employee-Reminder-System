@@ -4,18 +4,21 @@ import { useState, useEffect } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../../dataconnect/firebase';
 
-
 export default function EditModal({ task, onClose, onSuccess }) {
   const [formData, setFormData] = useState({
-    title: task.title,
-    description: task.description,
-    priority: task.priority,
-    status: task.status,
-    deadline: task.deadline?.toDate ? task.deadline.toDate().toISOString().slice(0, 16) : '',
+    title: task.title || '',
+    description: task.description || '',
+    priority: task.priority || 'low',
+    status: task.status || 'pending',
+    deadline: task.deadline?.toDate
+      ? task.deadline.toDate().toISOString().slice(0, 16)
+      : task.deadline instanceof Date
+      ? task.deadline.toISOString().slice(0, 16)
+      : '',
     notifications: {
       email: task.notifications?.email || false,
       push: task.notifications?.push || false,
-      reminderDays: task.notifications?.reminderDays || 1
+      reminderDays: task.notifications?.reminderDays ?? 1
     }
   });
 
@@ -30,16 +33,16 @@ export default function EditModal({ task, onClose, onSuccess }) {
     const { name, value, type, checked } = e.target;
 
     if (name.startsWith('notifications.')) {
-      const notificationField = name.split('.')[1];
-      setFormData(prev => ({
+      const key = name.split('.')[1];
+      setFormData((prev) => ({
         ...prev,
         notifications: {
           ...prev.notifications,
-          [notificationField]: type === 'checkbox' ? checked : value
+          [key]: type === 'checkbox' ? checked : value
         }
       }));
     } else {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         [name]: type === 'checkbox' ? checked : value
       }));
@@ -68,7 +71,13 @@ export default function EditModal({ task, onClose, onSuccess }) {
   return (
     <>
       <div className="modal-backdrop fade show"></div>
-      <div className="modal fade show" tabIndex="-1" style={{ display: 'block' }}>
+      <div
+        className="modal fade show"
+        tabIndex="-1"
+        style={{ display: 'block', zIndex: 1055 }}
+        role="dialog"
+        aria-modal="true"
+      >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header bg-primary text-white">
@@ -76,7 +85,11 @@ export default function EditModal({ task, onClose, onSuccess }) {
                 <i className="bi bi-pencil-square me-2"></i>
                 Edit Task
               </h5>
-              <button type="button" className="btn-close btn-close-white" onClick={onClose}></button>
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                onClick={onClose}
+              ></button>
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
@@ -149,7 +162,6 @@ export default function EditModal({ task, onClose, onSuccess }) {
                   />
                 </div>
 
-                {/* Notifications Section */}
                 <div className="mb-3">
                   <label className="form-label">Notifications</label>
                   <div className="form-check">
