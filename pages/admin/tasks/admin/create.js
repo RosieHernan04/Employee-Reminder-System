@@ -59,7 +59,7 @@ export default function CreateAdminTask() {
       await addDoc(collection(db, 'admin_tasks'), taskData);
 
       alert('Task created successfully!');
-      router.push('/admin/usermanagement');
+      router.push('/'); // Redirect to main page
     } catch (error) {
       console.error('Error creating task:', error);
       alert('Error creating task. Please try again.');
