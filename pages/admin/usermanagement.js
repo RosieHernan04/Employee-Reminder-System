@@ -720,17 +720,7 @@ export default function TaskManagement() {
                     </div>
                     <i className="bi bi-chevron-right ms-auto"></i>
                   </button>
-                  <button onClick={handleTaskStatus} 
-                          className="list-group-item-action d-flex align-items-center p-3 action-button">
-                    <div className="icon-circle bg-warning text-white me-3">
-                      <i className="bi bi-flag"></i>
-                    </div>
-                    <div className="d-flex flex-column">
-                      <span className="fw-bold">Task Status</span>
-                      <small className="text-muted">Track and update task progress</small>
-                    </div>
-                    <i className="bi bi-chevron-right ms-auto"></i>
-                  </button>
+                  {/* Removed Task Status button */}
                 </div>
               </div>
             </div>
