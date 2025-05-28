@@ -19,6 +19,7 @@ export default function EditDeleteAdminTasks() {
   const [selectedTask, setSelectedTask] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [alert, setAlert] = useState({ type: '', message: '' });
 
   useEffect(() => {
     fetchTasks();
@@ -74,7 +75,7 @@ export default function EditDeleteAdminTasks() {
 
   const handleEdit = (task) => {
     if (task.status === 'completed') {
-      alert('Cannot edit a completed task');
+      setAlert({ type: 'error', message: 'Cannot edit a completed task' });
       return;
     }
     setSelectedTask(task);
@@ -103,10 +104,10 @@ export default function EditDeleteAdminTasks() {
       await deleteDoc(doc(db, 'admin_tasks', selectedTask.id));
       setTasks(tasks.filter(t => t.id !== selectedTask.id));
       handleCloseDelete();
-      alert('Task deleted successfully!');
+      setAlert({ type: 'success', message: 'Task deleted successfully!' });
     } catch (error) {
       console.error('Error deleting task:', error);
-      alert('Failed to delete task. Please try again.');
+      setAlert({ type: 'error', message: 'Failed to delete task. Please try again.' });
     }
   };
 
@@ -136,6 +137,23 @@ export default function EditDeleteAdminTasks() {
   return (
     <Layout>
       <div className="container py-4">
+        {/* Custom Alert */}
+        {alert.message && (
+          <div
+            className={`alert alert-${alert.type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`}
+            role="alert"
+            style={{ marginBottom: "1rem" }}
+          >
+            {alert.message}
+            <button
+              type="button"
+              className="btn-close"
+              aria-label="Close"
+              onClick={() => setAlert({ type: '', message: '' })}
+              style={{ float: 'right', border: 'none', background: 'none' }}
+            ></button>
+          </div>
+        )}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div>
             <h1
