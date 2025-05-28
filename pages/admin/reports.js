@@ -215,7 +215,7 @@ export default function Reports() {
     }
     
     setLoading(false);
-  }, [activeTab, dateRange]);
+  }, [activeTab, dateRange,]);
 
   // Get date range based on selected option
   const getDateRange = () => {

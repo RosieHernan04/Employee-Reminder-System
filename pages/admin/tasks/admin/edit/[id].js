@@ -15,7 +15,7 @@ export default function EditAdminTask() {
     if (id) {
       fetchTask();
     }
-  }, [id]);
+  }, [id,]);
 
   const fetchTask = async () => {
     try {
