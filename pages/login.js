@@ -20,6 +20,7 @@ export default function Login() {
   const router = useRouter();
   const { setUser } = useUser();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     // Set persistence when component mounts
@@ -361,9 +362,9 @@ export default function Login() {
                   required
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-4" style={{ position: "relative" }}>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Password"
                   value={formData.password}
@@ -382,6 +383,26 @@ export default function Login() {
                   }}
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  style={{
+                    position: "absolute",
+                    right: "16px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    color: "#333",
+                    fontSize: "1.1rem",
+                    cursor: "pointer",
+                    padding: 0
+                  }}
+                  tabIndex={-1}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
               </div>
               <button
                 type="submit"
