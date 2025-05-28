@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../../dataconnect/firebase';
 
+
 export default function EditModal({ task, onClose, onSuccess }) {
   const [formData, setFormData] = useState({
     title: task.title,
@@ -27,7 +28,7 @@ export default function EditModal({ task, onClose, onSuccess }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     if (name.startsWith('notifications.')) {
       const notificationField = name.split('.')[1];
       setFormData(prev => ({
@@ -47,7 +48,7 @@ export default function EditModal({ task, onClose, onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const taskRef = doc(db, 'admin_tasks', task.id);
       const updateData = {
@@ -55,7 +56,7 @@ export default function EditModal({ task, onClose, onSuccess }) {
         deadline: formData.deadline ? new Date(formData.deadline) : null,
         updatedAt: new Date()
       };
-      
+
       await updateDoc(taskRef, updateData);
       onSuccess();
     } catch (error) {
@@ -148,6 +149,51 @@ export default function EditModal({ task, onClose, onSuccess }) {
                   />
                 </div>
 
+                {/* Notifications Section */}
+                <div className="mb-3">
+                  <label className="form-label">Notifications</label>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="notifications.email"
+                      checked={formData.notifications.email}
+                      onChange={handleChange}
+                      id="notifyEmail"
+                    />
+                    <label className="form-check-label" htmlFor="notifyEmail">
+                      Email Notification
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="notifications.push"
+                      checked={formData.notifications.push}
+                      onChange={handleChange}
+                      id="notifyPush"
+                    />
+                    <label className="form-check-label" htmlFor="notifyPush">
+                      Push Notification
+                    </label>
+                  </div>
+                  <div className="mt-2">
+                    <label className="form-label" htmlFor="reminderDays">
+                      Reminder Days Before Deadline
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      name="notifications.reminderDays"
+                      id="reminderDays"
+                      value={formData.notifications.reminderDays}
+                      onChange={handleChange}
+                      min="0"
+                    />
+                  </div>
+                </div>
+
                 <div className="modal-footer px-0 pb-0">
                   <button
                     type="button"
@@ -167,4 +213,4 @@ export default function EditModal({ task, onClose, onSuccess }) {
       </div>
     </>
   );
-} 
+}

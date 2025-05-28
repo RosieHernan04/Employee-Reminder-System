@@ -105,3 +105,5 @@ const TaskList = () => {
     </Layout>
   );
 }; 
+
+export default TaskList;
