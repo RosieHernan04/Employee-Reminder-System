@@ -12,6 +12,7 @@ export default function CreateTask() {
   const router = useRouter();
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({ type: '', message: '' });
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -26,6 +27,7 @@ export default function CreateTask() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setAlert({ type: '', message: '' });
 
     try {
       const deadline = new Date(formData.deadlineDate + 'T' + formData.deadlineTime);
@@ -62,11 +64,11 @@ export default function CreateTask() {
         taskRef.id
       );
 
-      alert('Task created successfully!');
-      router.push('/admin/usermanagement');
+      setAlert({ type: 'success', message: 'Task created successfully!' });
+      setTimeout(() => router.push('/admin/usermanagement'), 1500); // Redirect after short delay
     } catch (error) {
       console.error('Error creating task:', error);
-      alert('Error creating task. Please try again.');
+      setAlert({ type: 'error', message: 'Error creating task. Please try again.' });
     } finally {
       setLoading(false);
     }
@@ -84,8 +86,23 @@ export default function CreateTask() {
                   Fill in the fields to create a new task for employee.
                 </p>
               </div>
-              
               <div className="card-body p-4">
+                {/* Custom Alert */}
+                {alert.message && (
+                  <div
+                    className={`alert alert-${alert.type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`}
+                    role="alert"
+                  >
+                    {alert.message}
+                    <button
+                      type="button"
+                      className="btn-close"
+                      aria-label="Close"
+                      onClick={() => setAlert({ type: '', message: '' })}
+                      style={{ float: 'right', border: 'none', background: 'none' }}
+                    ></button>
+                  </div>
+                )}
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
                     <label className="form-label h5 mb-3">Task Title</label>

@@ -10,6 +10,7 @@ import { getAuth } from 'firebase/auth'; // <-- ADD THIS
 export default function CreateAdminTask() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({ type: '', message: '' });
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -24,6 +25,7 @@ export default function CreateAdminTask() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setAlert({ type: '', message: '' });
 
     try {
       const auth = getAuth(); // <-- INIT AUTH
@@ -58,11 +60,11 @@ export default function CreateAdminTask() {
 
       await addDoc(collection(db, 'admin_tasks'), taskData);
 
-      alert('Task created successfully!');
-      router.push('/admin/usermanagement');
+      setAlert({ type: 'success', message: 'Task created successfully!' });
+      setTimeout(() => router.push('/admin/usermanagement'), 1500); // Redirect after short delay
     } catch (error) {
       console.error('Error creating task:', error);
-      alert('Error creating task. Please try again.');
+      setAlert({ type: 'error', message: 'Error creating task. Please try again.' });
     } finally {
       setLoading(false);
     }
@@ -84,6 +86,24 @@ export default function CreateAdminTask() {
               <h1>Create Admin Task</h1>
               <p>Fill in the fields to create a new administrative task.</p>
             </div>
+
+            {/* Custom Alert */}
+            {alert.message && (
+              <div
+                className={`alert alert-${alert.type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`}
+                role="alert"
+                style={{ margin: "1rem 2rem 0 2rem" }}
+              >
+                {alert.message}
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={() => setAlert({ type: '', message: '' })}
+                  style={{ float: 'right', border: 'none', background: 'none' }}
+                ></button>
+              </div>
+            )}
 
             <form onSubmit={handleSubmit}>
               <div className="form-group">
