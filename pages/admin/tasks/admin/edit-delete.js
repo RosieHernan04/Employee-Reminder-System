@@ -138,18 +138,19 @@ export default function EditDeleteAdminTasks() {
       <div className="container py-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div>
-            <h1 className="mb-0">Manage Admin Tasks</h1>
-            <nav aria-label="breadcrumb">
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">
-                  <Link href="/admin/dashboard">Dashboard</Link>
-                </li>
-                <li className="breadcrumb-item">
-                  <Link href="/admin/usermanagement">Task Management</Link>
-                </li>
-                <li className="breadcrumb-item active">Edit/Delete Admin Tasks</li>
-              </ol>
-            </nav>
+            <h1
+              className="mb-0"
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontWeight: 700,
+                fontSize: '2.5rem',
+                letterSpacing: '1px',
+                color: '#2c3e50'
+              }}
+            >
+              Manage Admin Tasks
+            </h1>
+            {/* Breadcrumbs removed */}
           </div>
           <div>
             <button
@@ -240,7 +241,6 @@ export default function EditDeleteAdminTasks() {
           />
         )}
       </div>
-
       <style jsx>{`
         .card {
           border: none;
@@ -340,4 +340,4 @@ function getStatusColor(status) {
     default:
       return 'warning';
   }
-} 
+}
