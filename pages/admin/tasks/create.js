@@ -63,7 +63,7 @@ export default function CreateTask() {
       );
 
       alert('Task created successfully!');
-      router.push('/'); // Redirect to main page
+      router.push('/admin/usermanagement');
     } catch (error) {
       console.error('Error creating task:', error);
       alert('Error creating task. Please try again.');
