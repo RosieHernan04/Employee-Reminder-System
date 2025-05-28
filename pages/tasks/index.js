@@ -1,9 +1,73 @@
+import { useEffect, useState } from 'react';
 import Layout from 'components/MainLayout/Layout';
 
+// Helper function to format date
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
 
+// Get next status based on current
+const getNextStatus = (status) => {
+  const statuses = ['pending', 'in progress', 'completed'];
+  const currentIndex = statuses.indexOf(status.toLowerCase());
+  return statuses[currentIndex + 1] || status;
+};
 
 const TaskList = () => {
-  // ... existing code ...
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  // Simulated data fetch
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        // Replace this with an actual API call
+        const simulatedData = [
+          {
+            id: 1,
+            title: 'Update website banner',
+            priority: 'High',
+            status: 'Pending',
+            description: 'Change banner for summer promo',
+            deadline: '2025-06-01',
+            assignedTo: { fullName: 'Rose Ann Hernan' },
+            assignedBy: { name: 'Project Manager' },
+          },
+          {
+            id: 2,
+            title: 'Fix login bug',
+            priority: 'Medium',
+            status: 'In Progress',
+            description: 'Investigate and resolve login redirect issue',
+            deadline: '2025-06-03',
+            assignedTo: { fullName: 'Rose Ann Hernan' },
+            assignedBy: { name: 'Team Lead' },
+          },
+        ];
+
+        // Simulate delay
+        setTimeout(() => {
+          setTasks(simulatedData);
+          setLoading(false);
+        }, 1000);
+      } catch (err) {
+        setError('Failed to load tasks');
+        setLoading(false);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  const handleStatusChange = (taskId, newStatus) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, status: newStatus } : task
+      )
+    );
+  };
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
@@ -24,9 +88,7 @@ const TaskList = () => {
         <h1 className="text-3xl font-bold mb-6">My Tasks</h1>
         {loading ? (
           <div className="text-center">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
+            <p>Loading...</p>
           </div>
         ) : error ? (
           <div className="alert alert-danger" role="alert">
@@ -85,7 +147,9 @@ const TaskList = () => {
                 </div>
                 <div className="mt-4 flex justify-end space-x-2">
                   <button
-                    onClick={() => handleStatusChange(task.id, getNextStatus(task.status))}
+                    onClick={() =>
+                      handleStatusChange(task.id, getNextStatus(task.status))
+                    }
                     className={`px-4 py-2 text-white rounded transition-colors ${
                       task.status.toLowerCase() === 'completed'
                         ? 'bg-gray-400 cursor-not-allowed'
@@ -103,6 +167,6 @@ const TaskList = () => {
       </div>
     </Layout>
   );
-}; 
+};
 
 export default TaskList;
