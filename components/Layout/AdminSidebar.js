@@ -10,16 +10,38 @@ export default function AdminSidebar() {
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const handleLogout = () => {
+    // Clear user data from localStorage
     localStorage.removeItem("user");
+    // Redirect to login page
     router.push("/login");
   };
 
   const navItems = [
-    { name: "Dashboard", path: "/admin/dashboard", icon: "bi bi-speedometer2" },
-    { name: "Task Management", path: "/admin/usermanagement", icon: "bi bi-list-check" },
-    { name: "Meeting Management", path: "/admin/meetingmanagement", icon: "bi bi-calendar-check" },
-    { name: "Reports", path: "/admin/reports", icon: "bi bi-file-earmark-text" },
-    { name: "Settings", path: "/admin/settings", icon: "bi bi-gear" },
+    {
+      name: "Dashboard",
+      path: "/admin/dashboard",
+      icon: "bi bi-speedometer2",
+    },
+    {
+      name: "Task Management",
+      path: "/admin/usermanagement",
+      icon: "bi bi-list-check",
+    },
+    {
+      name: "Meeting Management",
+      path: "/admin/meetingmanagement",
+      icon: "bi bi-calendar-check",
+    },
+    {
+      name: "Reports",
+      path: "/admin/reports",
+      icon: "bi bi-file-earmark-text",
+    },
+    {
+      name: "Settings",
+      path: "/admin/settings",
+      icon: "bi bi-gear",
+    },
   ];
 
   return (
@@ -36,11 +58,8 @@ export default function AdminSidebar() {
         padding: "20px",
         zIndex: 1000,
         boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
-        display: "flex",
-        flexDirection: "column",
       }}
     >
-      {/* Logo and Header */}
       <div className="text-center mb-4">
         <div className="mb-3">
           <Image
@@ -49,10 +68,12 @@ export default function AdminSidebar() {
             width={100}
             height={100}
             style={{
+              width: "100px",
+              height: "100px",
               borderRadius: "50%",
               border: "3px solid rgba(255,255,255,0.2)",
               boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-              objectFit: "cover",
+              objectFit: "cover"
             }}
           />
         </div>
@@ -62,40 +83,35 @@ export default function AdminSidebar() {
         </p>
       </div>
 
-      {/* User Info */}
-      <div
-        className="user-info mb-4 p-3"
-        style={{
-          background: "rgba(255,255,255,0.1)",
-          borderRadius: "10px",
-          border: "1px solid rgba(255,255,255,0.1)",
-        }}
-      >
+      <div className="user-info mb-4 p-3" style={{ 
+        background: "rgba(255,255,255,0.1)", 
+        borderRadius: "10px",
+        border: "1px solid rgba(255,255,255,0.1)"
+      }}>
         <div className="d-flex align-items-center">
           <div className="me-3">
-            <div
-              style={{
-                width: "45px",
-                height: "45px",
-                background: "rgba(255,255,255,0.2)",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+            <div style={{ 
+              width: "45px", 
+              height: "45px", 
+              background: "rgba(255,255,255,0.2)", 
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}>
               <i className="bi bi-person-circle" style={{ fontSize: "1.8rem" }}></i>
             </div>
           </div>
           <div style={{ flex: 1 }}>
-            <div className="user-name">{user?.fullName || user?.name || "Admin"}</div>
+            <div className="user-name">
+              {user?.fullName || user?.name || "Admin"}
+            </div>
             <div className="user-role">Admin Portal</div>
           </div>
         </div>
       </div>
 
-      {/* Navigation Items */}
-      <nav style={{ flexGrow: 1 }}>
+      <nav>
         {navItems.map((item) => (
           <Link
             key={item.path}
@@ -134,8 +150,7 @@ export default function AdminSidebar() {
         ))}
       </nav>
 
-      {/* Logout Button */}
-      <div style={{ marginTop: "auto" }}>
+      <div className="mt-auto" style={{ position: "absolute", bottom: "20px", width: "calc(100% - 40px)" }}>
         <button
           onClick={handleLogout}
           style={{
