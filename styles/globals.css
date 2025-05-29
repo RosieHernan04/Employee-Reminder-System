@@ -226,19 +226,3 @@ html, body {
   overflow-x: auto;
 }
 
-/* C. Sidebar and main content stacking on small screens */
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    width: 100%;
-    height: auto;
-    z-index: 1050;
-    background-color: #007bff;
-  }
-
-  .main-content {
-    margin-top: 60px; /* Push down below sidebar */
-    padding: 10px;
-  }
-}
-

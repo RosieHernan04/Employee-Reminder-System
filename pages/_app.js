@@ -6,6 +6,7 @@ import { UserProvider } from "../dataconnect/context/UserContext";
 import { messaging } from "../lib/firebase";
 import { onMessage } from "firebase/messaging";
 import "../styles/globals.css";
+import Layout from "../components/MainLayout/Layout";
 
 export default function MyApp({ Component, pageProps }) {
   // Register Service Worker
@@ -23,28 +24,30 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
 
   // Handle Foreground Notifications
-useEffect(() => {
-  if (typeof window !== "undefined" && messaging) {
-    console.log("✅ messaging is available:", messaging);
+  useEffect(() => {
+    if (typeof window !== "undefined" && messaging) {
+      console.log("✅ messaging is available:", messaging);
 
-    onMessage(messaging, (payload) => {
-      console.log("🔔 Foreground push notification received:", payload);
+      onMessage(messaging, (payload) => {
+        console.log("🔔 Foreground push notification received:", payload);
 
-      if (Notification.permission === "granted") {
-        new Notification(payload.notification.title, {
-          body: payload.notification.body,
-          icon: "/adecmpc-logo.jpg",
-        });
-      }
-    });
-  } else {
-    console.warn("❌ messaging is NOT available");
-  }
-}, []);
+        if (Notification.permission === "granted") {
+          new Notification(payload.notification.title, {
+            body: payload.notification.body,
+            icon: "/adecmpc-logo.jpg",
+          });
+        }
+      });
+    } else {
+      console.warn("❌ messaging is NOT available");
+    }
+  }, []);
 
   return (
     <UserProvider>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </UserProvider>
   );
 }
