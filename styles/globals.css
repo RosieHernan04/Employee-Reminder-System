@@ -226,7 +226,8 @@ html, body {
   overflow-x: auto;
 }
 
-/* C. Sidebar and main content stacking on small screens */
+/* Remove or comment out these rules to avoid conflict with Layout.js responsive sidebar */
+/*
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
@@ -237,8 +238,5 @@ html, body {
   }
 
   .main-content {
-    margin-top: 60px; /* Push down below sidebar */
-    padding: 10px;
-  }
-}
+    margin-top: 60px; /* Push down below sidebar */   
 
