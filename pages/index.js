@@ -152,7 +152,7 @@ export default function Home() {
               fontSize: "1.2rem",
             }}
           >
-            Together we help those in need
+            Where Unity Creates Change
           </p>
         </div>
       </div>
