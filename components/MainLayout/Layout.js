@@ -29,18 +29,23 @@ export default function Layout({ children }) {
         .main-layout {
           display: flex;
           height: 100vh;
+          width: 100vw; /* Ensure it fills the viewport */
           font-family: 'Poppins', sans-serif;
         }
         .sidebar-container {
           width: 350px;
+          flex-shrink: 0;
           transition: transform 0.3s ease;
         }
         .main-content {
-          margin-left: 350px;
-          width: calc(100% - 350px);
+          flex: 1; /* Take up remaining space */
+          margin-left: 0;
+          width: auto;
           background: #f8f9fa;
           min-height: 100vh;
           transition: margin-left 0.3s ease, width 0.3s ease;
+          display: flex;
+          flex-direction: column;
         }
         .sidebar-toggle {
           display: none;
@@ -90,7 +95,7 @@ export default function Layout({ children }) {
       </button>
       <div className="main-layout">
         <div className={`sidebar-container${sidebarOpen ? " open" : ""}`}>
-          <SidebarComponent />
+          <SidebarComponent onClose={() => setSidebarOpen(false)} />
         </div>
         <main
           className="main-content"
