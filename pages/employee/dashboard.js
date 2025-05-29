@@ -16,12 +16,14 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import { useUser } from '../../dataconnect/context/UserContext';
 
 // Register Chart.js components to fix "category is not a registered scale" error
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export default function Dashboard() {
   const router = useRouter();
+  const { user } = useUser();
   const [loading, setLoading] = useState(true);
   const [deadlines, setDeadlines] = useState([]);
 
@@ -31,21 +33,40 @@ export default function Dashboard() {
     let unsubscribeSelfTasks = null;
     let unsubscribeMeetings = null;
 
+    // Improved helper to check if task/meeting belongs to current user
+    function isMine(item) {
+      if (!user) return false;
+      const userIds = [user.id, user.uid].filter(Boolean);
+      const userEmails = [user.email].filter(Boolean);
+
+      // Check all possible fields for id/email match
+      return (
+        userIds.includes(item.assignedTo?.id) ||
+        userEmails.includes(item.assignedTo?.email) ||
+        userIds.includes(item.userId) ||
+        userEmails.includes(item.userId) ||
+        userIds.includes(item.createdBy?.id) ||
+        userEmails.includes(item.createdBy?.email)
+      );
+    }
+
     // Real-time listener for employee_tasks (assigned to employee)
     const employeeTasksQuery = query(
       collection(db, 'employee_tasks'),
       orderBy('deadline', 'desc')
     );
     unsubscribeEmployeeTasks = onSnapshot(employeeTasksQuery, snapshot => {
-      const employeeTasks = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        deadline: doc.data().deadline?.toDate() || new Date(),
-        type: 'employee_task',
-        source: 'employee_tasks',
-        status: doc.data().status || 'pending',
-        priority: doc.data().priority ? doc.data().priority : 'high' // default to 'high'
-      }));
+      const employeeTasks = snapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          deadline: doc.data().deadline?.toDate() || new Date(),
+          type: 'employee_task',
+          source: 'employee_tasks',
+          status: doc.data().status || 'pending',
+          priority: doc.data().priority ? doc.data().priority : 'high'
+        }))
+        .filter(isMine); // Only tasks for this user
       updateTasks(employeeTasks, null, null);
     });
 
@@ -55,15 +76,17 @@ export default function Dashboard() {
       orderBy('dueDate', 'desc')
     );
     unsubscribeSelfTasks = onSnapshot(selfTasksQuery, snapshot => {
-      const selfTasks = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        deadline: doc.data().dueDate?.toDate() || new Date(),
-        type: 'self_task',
-        source: 'tasks',
-        status: doc.data().status || 'pending',
-        priority: doc.data().priority ? doc.data().priority : 'high' // default to 'high'
-      }));
+      const selfTasks = snapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          deadline: doc.data().dueDate?.toDate() || new Date(),
+          type: 'self_task',
+          source: 'tasks',
+          status: doc.data().status || 'pending',
+          priority: doc.data().priority ? doc.data().priority : 'high'
+        }))
+        .filter(isMine); // Only tasks for this user
       updateTasks(null, selfTasks, null);
     });
 
@@ -73,15 +96,17 @@ export default function Dashboard() {
       orderBy('start', 'desc')
     );
     unsubscribeMeetings = onSnapshot(meetingsQuery, snapshot => {
-      const meetings = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        deadline: doc.data().start?.toDate() || new Date(),
-        type: 'meeting',
-        source: 'employee_meetings',
-        status: doc.data().status || 'pending',
-        priority: 'medium'
-      }));
+      const meetings = snapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          deadline: doc.data().start?.toDate() || new Date(),
+          type: 'meeting',
+          source: 'employee_meetings',
+          status: doc.data().status || 'pending',
+          priority: 'medium'
+        }))
+        .filter(isMine); // Only meetings for this user
       updateTasks(null, null, meetings);
     });
 
@@ -112,7 +137,7 @@ export default function Dashboard() {
       if (unsubscribeSelfTasks) unsubscribeSelfTasks();
       if (unsubscribeMeetings) unsubscribeMeetings();
     };
-  }, []);
+  }, [user]);
 
   // Aggregates
   const now = new Date();
