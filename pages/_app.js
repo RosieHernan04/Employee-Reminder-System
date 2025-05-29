@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { UserProvider } from "../dataconnect/context/UserContext";
 import { messaging } from "../lib/firebase";
 import { onMessage } from "firebase/messaging";
+import "../styles/globals.css";
 
 export default function MyApp({ Component, pageProps }) {
   // Register Service Worker

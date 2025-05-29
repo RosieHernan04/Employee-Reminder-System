@@ -10,9 +10,7 @@ export default function Sidebar() {
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const handleLogout = () => {
-    // Clear user data from localStorage
     localStorage.removeItem("user");
-    // Redirect to login page
     router.push("/login");
   };
 
@@ -33,8 +31,8 @@ export default function Sidebar() {
       icon: "bi bi-calendar-check",
     },
     {
-      name: "Profile Settings", // Changed from "Create Task" to "Profile Settings"
-      path: "/employee/settings", // Updated path
+      name: "Profile Settings",
+      path: "/employee/settings",
       icon: "bi bi-person-circle",
     },
   ];
@@ -53,24 +51,27 @@ export default function Sidebar() {
         padding: "20px",
         zIndex: 1000,
         boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
+      {/* Logo and Header */}
       <div className="text-center mb-4">
         <div className="mb-3">
-<Image
-  src="/487083768_557976863971305_3421396436649360911_n.jpg"
-  alt="ADECMPC Logo"
-  width={100}
-  height={100}
-  style={{
-    width: "100px", // ✅ keeps visual layout
-    height: "100px",
-    borderRadius: "50%",
-    border: "3px solid rgba(255,255,255,0.2)",
-    boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-    objectFit: "cover" // ensures no distortion inside the circle
-  }}
-/>
+          <Image
+            src="/487083768_557976863971305_3421396436649360911_n.jpg"
+            alt="ADECMPC Logo"
+            width={100}
+            height={100}
+            style={{
+              width: "100px",
+              height: "100px",
+              borderRadius: "50%",
+              border: "3px solid rgba(255,255,255,0.2)",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+              objectFit: "cover",
+            }}
+          />
         </div>
         <h3 style={{ fontWeight: "bold", color: "#ffc107" }}>ADECMPC</h3>
         <p className="mb-0" style={{ fontSize: "0.9rem", opacity: 0.8 }}>
@@ -78,6 +79,7 @@ export default function Sidebar() {
         </p>
       </div>
 
+      {/* User Info */}
       <div
         className="user-info mb-4 p-3"
         style={{
@@ -118,7 +120,8 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <nav>
+      {/* Navigation Links */}
+      <nav style={{ flexGrow: 1 }}>
         {navItems.map((item) => (
           <Link
             key={item.path}
@@ -158,10 +161,8 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <div
-        className="mt-auto"
-        style={{ position: "absolute", bottom: "20px", width: "calc(100% - 40px)" }}
-      >
+      {/* Logout Button */}
+      <div style={{ marginTop: "auto" }}>
         <button
           onClick={handleLogout}
           style={{

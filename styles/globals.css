@@ -1,9 +1,10 @@
 /* General Reset */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #FFEB3B; /* Custom Yellow */
-  color: #4CAF50; /* Custom Green */
+  font-family: 'Poppins', sans-serif; /* Use Poppins if possible */
+  background-color: #f8f9fa; /* A light neutral background */
+  color: #212529; /* Standard dark text */
+  overflow-x: hidden;
 }
 
 /* Button Styles */
@@ -47,6 +48,14 @@ button:hover {
 .react-calendar__tile--active {
   background: #007bff !important;
   color: white !important;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 10px 15px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
 }
 
 /* Sidebar Link Hover Effect */
@@ -192,40 +201,44 @@ button:hover {
   cursor: pointer;
 }
 
+/* A. Bootstrap-like container and row behavior */
+.container-fluid {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* B. Prevent zoom overflow and scaling issues */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* D. Ensure .main-content is always responsive */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* C. Sidebar and main content stacking on small screens */
 @media (max-width: 768px) {
   .sidebar {
-    flex: 0 0 100%; /* Sidebar takes full width */
-    max-width: 100%;
-    margin-bottom: 20px; /* Add spacing below */
+    position: fixed;
+    width: 100%;
+    height: auto;
+    z-index: 1050;
+    background-color: #007bff;
   }
 
   .main-content {
-    flex: 0 0 100%; /* Main content takes full width */
-    max-width: 100%;
+    margin-top: 60px; /* Push down below sidebar */
+    padding: 10px;
   }
-}
-
-/* Dashboard Layout */
-.dashboard-container {
-  display: flex;
-  flex-wrap: wrap; /* Ensure content wraps on smaller screens */
-  min-height: 100vh;
-}
-
-.sidebar {
-  flex: 0 0 250px; /* Fixed width for the sidebar */
-  max-width: 250px;
-  background-color: #007bff; /* Adjust as needed */
-  color: #ffffff;
-}
-
-.main-content {
-  flex: 1; /* Take up remaining space */
-  padding: 20px;
-  min-width: 300px; /* Prevent shrinking too much */
-}
-
-body {
-  overflow-x: hidden;
 }
 
