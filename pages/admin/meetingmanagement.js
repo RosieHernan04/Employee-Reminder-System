@@ -616,6 +616,7 @@ export default function MeetingManagement() {
           align-items: center;
           justify-content: space-between;
           margin-bottom: 15px;
+          flex-wrap: wrap;
         }
 
         .calendar-title {
@@ -750,6 +751,40 @@ export default function MeetingManagement() {
           display: flex;
           align-items: center;
           gap: 0.25rem;
+        }
+
+        /* --- Responsive styles for mobile --- */
+        @media (max-width: 600px) {
+          .calendar-container {
+            padding: 5px;
+          }
+          .calendar-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+          }
+          .calendar-title {
+            font-size: 1rem;
+            text-align: center;
+          }
+          .calendar-weekdays {
+            font-size: 0.8rem;
+          }
+          .calendar-days {
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+          }
+          .calendar-day {
+            min-height: 36px;
+            font-size: 0.7rem;
+            padding: 4px;
+          }
+          .day-number {
+            font-size: 0.85em;
+          }
+          .meeting-indicator {
+            font-size: 0.65rem;
+          }
         }
       `}</style>
     </Layout>
