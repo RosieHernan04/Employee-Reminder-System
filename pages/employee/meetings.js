@@ -991,34 +991,6 @@ export default function Meetings() {
           background-color: #0b5ed7;
           border-color: #0a58ca;
         }
-        /* --- Responsive styles for mobile calendar --- */
-        @media (max-width: 600px) {
-          :global(.rbc-calendar) {
-            font-size: 0.75rem;
-          }
-          :global(.rbc-toolbar) {
-            flex-direction: column;
-            gap: 0.5rem;
-          }
-          :global(.rbc-month-view), :global(.rbc-time-view) {
-            min-width: 0 !important;
-          }
-          :global(.rbc-month-row) .rbc-day-bg,
-          :global(.rbc-date-cell),
-          :global(.rbc-day-slot) {
-            min-width: 32px !important;
-            min-height: 32px !important;
-            padding: 0 !important;
-          }
-          :global(.rbc-event) {
-            font-size: 0.7em;
-            padding: 2px 4px;
-          }
-          :global(.rbc-header) {
-            font-size: 0.8em;
-            padding: 4px 0;
-          }
-        }
       `}</style>
     </Layout>
   );
