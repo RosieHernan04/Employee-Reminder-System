@@ -22,6 +22,7 @@ type Task = {
   createdById?: string;
   _ref?: FirebaseFirestore.DocumentReference;
   reminderSent?: boolean;
+  status?: string; // <-- Add this line
 };
 
 // Meeting type
@@ -33,6 +34,7 @@ type Meeting = {
   userId?: string;
   _ref?: FirebaseFirestore.DocumentReference;
   reminderSent?: boolean;
+  status?: string; // <-- Add this line
 };
 
 // Fetch tasks from all collections (including admin_tasks)
@@ -162,6 +164,12 @@ export const sendReminderEmail = onSchedule(
 
       if (!deadline) {
         logger.warn(`No deadline for task: ${task.title}`);
+        continue;
+      }
+
+      // --- Skip if task is completed ---
+      if (task.status === 'completed') {
+        logger.info(`Task is completed, skipping: ${task.title}`);
         continue;
       }
 
@@ -301,6 +309,12 @@ Task Management System`,
     const windowStart = new Date(now.getTime() - 5 * 60 * 1000); // 5 mins before now
 
     for (const meeting of adminMeetings) {
+      // --- Skip if meeting is completed ---
+      if (meeting.status === 'completed') {
+        logger.info(`Admin meeting is completed, skipping: ${meeting.title}`);
+        continue;
+      }
+
       if (meeting.reminderSent || meeting.emailNotifications === false) continue;
 
       if (!meeting.date || !meeting.reminderTime) {
@@ -357,6 +371,12 @@ Task Management System`,
     const employeeMeetings = await getEmployeeMeetings();
     const timezone = "Asia/Manila";
     for (const meeting of employeeMeetings) {
+      // --- Skip if meeting is completed ---
+      if (meeting.status === 'completed') {
+        logger.info(`Employee meeting is completed, skipping: ${meeting.title}`);
+        continue;
+      }
+
       if (meeting.reminderSent === true) continue;
 
       if (!meeting.start) {
