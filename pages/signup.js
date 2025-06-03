@@ -71,7 +71,7 @@ export default function Signup() {
         <div className="container-fluid">
           <a className="navbar-brand d-flex align-items-center" href="#">
             <Image
-              src="/487083768_557976863971305_3421396436649360911_n.jpg"
+              src="/ADECMPCLOGO.png"
               alt="ADECMPC Logo"
               width={45}
               height={45}
@@ -131,7 +131,7 @@ export default function Signup() {
           }}>
             <div className="text-center mb-4">
             <Image
-              src="/487083768_557976863971305_3421396436649360911_n.jpg"
+              src="/ADECMPCLOGO.png"
               alt="ADECMPC Logo"
               width={80}
               height={80}

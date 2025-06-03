@@ -88,7 +88,7 @@ export default function Sidebar({ onClose }) {
         <div className="text-center mb-4">
           <div className="mb-3">
             <Image
-              src="/487083768_557976863971305_3421396436649360911_n.jpg"
+              src="/ADECMPCLOGO.png"
               alt="ADECMPC Logo"
               width={100}
               height={100}
@@ -102,7 +102,7 @@ export default function Sidebar({ onClose }) {
               }}
             />
           </div>
-          <h3 style={{ fontWeight: "bold", color: "#ffc107" }}>ADECMPC</h3>
+          <h3 style={{ fontWeight: "bold", color: "#ffffff" }}>ADECMPC</h3>
           <p className="mb-0" style={{ fontSize: "0.9rem", opacity: 0.8 }}>
             Employee Portal
           </p>
