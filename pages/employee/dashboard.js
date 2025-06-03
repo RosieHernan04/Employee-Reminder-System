@@ -139,20 +139,38 @@ export default function Dashboard() {
     };
   }, [user]);
 
+  // Helper to check if a date is in the current month and year
+  function isCurrentMonth(date) {
+    if (!date) return false;
+    const d = date instanceof Date ? date : new Date(date);
+    const now = new Date();
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  }
+
+  // Helper to check if a task/meeting is overdue (not completed and deadline < now)
+  function isOverdue(item) {
+    const now = new Date();
+    return (item.status !== 'completed') && item.deadline < now;
+  }
+
+  // Filter deadlines: show all overdue, and all others only if in current month
+  const filteredDeadlines = deadlines.filter(item =>
+    isOverdue(item) || isCurrentMonth(item.deadline)
+  );
+
   // Aggregates
   const now = new Date();
-  // Only count tasks that are not completed
-  const totalTasks = deadlines.filter(
+  // Only count tasks that are not completed and are in filteredDeadlines
+  const totalTasks = filteredDeadlines.filter(
     d => (d.type === 'employee_task' || d.type === 'self_task') && d.status !== 'completed'
   ).length;
-  const completedTasks = deadlines.filter(
+  const completedTasks = filteredDeadlines.filter(
     d => (d.type === 'employee_task' || d.type === 'self_task') && d.status === 'completed'
   ).length;
-  const overdueTasks = deadlines.filter(
+  const overdueTasks = filteredDeadlines.filter(
     d => (d.type === 'employee_task' || d.type === 'self_task') && (d.status === 'pending' || d.status === 'assigned') && d.deadline < now
   ).length;
-  // Only count meetings that are NOT completed
-  const totalMeetings = deadlines.filter(d => d.type === 'meeting' && d.status !== 'completed').length;
+  const totalMeetings = filteredDeadlines.filter(d => d.type === 'meeting' && d.status !== 'completed').length;
 
   // Prepare data for Bar chart
   const taskProgressData = {
@@ -279,7 +297,7 @@ export default function Dashboard() {
         {/* Progress Table */}
         <div className="glass-section glass-table-section">
           <h2 className="glass-title">Progress Table</h2>
-          {deadlines.length === 0 ? (
+          {filteredDeadlines.length === 0 ? (
             <p>No data available for tasks or meetings.</p>
           ) : (
             <div className="table-responsive">
@@ -294,7 +312,7 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {deadlines.map(item => (
+                  {filteredDeadlines.map(item => (
                     <tr key={item.id} className="glass-row">
                       <td className="glass-td glass-td-blue text-center">{item.title}</td>
                       <td className="glass-td text-center">{item.description}</td>
