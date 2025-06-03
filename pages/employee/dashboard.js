@@ -545,3 +545,5 @@ function getSourceBgClass(source) {
       return 'source-default-bg';
   }
 }
+
+// this should be committed to the main branch
