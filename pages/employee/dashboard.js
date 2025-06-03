@@ -141,9 +141,16 @@ export default function Dashboard() {
 
   // Aggregates
   const now = new Date();
-  const totalTasks = deadlines.filter(d => d.type === 'employee_task' || d.type === 'self_task').length;
-  const completedTasks = deadlines.filter(d => (d.type === 'employee_task' || d.type === 'self_task') && d.status === 'completed').length;
-  const overdueTasks = deadlines.filter(d => (d.type === 'employee_task' || d.type === 'self_task') && (d.status === 'pending' || d.status === 'assigned') && d.deadline < now).length;
+  // Only count tasks that are not completed
+  const totalTasks = deadlines.filter(
+    d => (d.type === 'employee_task' || d.type === 'self_task') && d.status !== 'completed'
+  ).length;
+  const completedTasks = deadlines.filter(
+    d => (d.type === 'employee_task' || d.type === 'self_task') && d.status === 'completed'
+  ).length;
+  const overdueTasks = deadlines.filter(
+    d => (d.type === 'employee_task' || d.type === 'self_task') && (d.status === 'pending' || d.status === 'assigned') && d.deadline < now
+  ).length;
   // Only count meetings that are NOT completed
   const totalMeetings = deadlines.filter(d => d.type === 'meeting' && d.status !== 'completed').length;
 
