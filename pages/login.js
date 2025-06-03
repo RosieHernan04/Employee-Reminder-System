@@ -304,43 +304,35 @@ export default function Login() {
               </div>
             )}
 
-            <div className="d-flex justify-content-center gap-3 mb-4">
-              <button
-                className={`role-btn ${selectedRole === "Admin" ? "active" : ""}`}
-                onClick={() => setSelectedRole("Admin")}
+            {/* Role Selection Dropdown */}
+            <div className="mb-2">
+              <select
+                value={selectedRole || ""}
+                onChange={e => setSelectedRole(e.target.value)}
                 style={{
-                  background: selectedRole === "Admin" ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
-                  border: '1px solid rgba(255, 255, 255, 0.5)',
+                  width: '100%',
+                  padding: '12px 20px',
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  border: '2px solid rgba(255, 255, 255, 0.3)',
                   borderRadius: '12px',
-                  padding: '10px 25px',
-                  color: '#fff',
+                  color: '#333',
                   fontSize: '0.95rem',
-                  fontWeight: '500',
-                  transition: 'all 0.3s ease'
+                  outline: 'none',
+                  backdropFilter: 'blur(5px)',
+                  boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)',
+                  marginBottom: '8px'
                 }}
+                required
               >
-                Admin
-              </button>
-              <button
-                className={`role-btn ${selectedRole === "Employee" ? "active" : ""}`}
-                onClick={() => setSelectedRole("Employee")}
-                style={{
-                  background: selectedRole === "Employee" ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
-                  border: '1px solid rgba(255, 255, 255, 0.5)',
-                  borderRadius: '12px',
-                  padding: '10px 25px',
-                  color: '#fff',
-                  fontSize: '0.95rem',
-                  fontWeight: '500',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                Employee
-              </button>
+                <option value="" disabled>Select Role</option>
+                <option value="Admin">Admin</option>
+                <option value="Employee">Employee</option>
+              </select>
             </div>
+            {/* End Role Selection Dropdown */}
 
             <form onSubmit={handleSubmit}>
-              <div className="mb-3">
+              <div className="mb-2">
                 <input
                   type="email"
                   name="email"
@@ -357,12 +349,13 @@ export default function Login() {
                     fontSize: '0.95rem',
                     outline: 'none',
                     backdropFilter: 'blur(5px)',
-                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)'
+                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)',
+                    marginBottom: '8px'
                   }}
                   required
                 />
               </div>
-              <div className="mb-4" style={{ position: "relative" }}>
+              <div className="mb-3" style={{ position: "relative" }}>
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
@@ -379,7 +372,8 @@ export default function Login() {
                     fontSize: '0.95rem',
                     outline: 'none',
                     backdropFilter: 'blur(5px)',
-                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)'
+                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)',
+                    marginBottom: '0'
                   }}
                   required
                 />
