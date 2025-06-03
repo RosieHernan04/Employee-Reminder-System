@@ -362,8 +362,10 @@ export default function Meetings() {
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
   };
 
-  // Filter meetings to only show those in the current month
-  const filteredMeetings = meetings.filter(meeting => isCurrentMonth(meeting.start));
+  // Filter meetings: show all incomplete meetings, and only completed meetings from the current month
+  const filteredMeetings = meetings.filter(meeting =>
+    meeting.status !== 'completed' || (meeting.status === 'completed' && isCurrentMonth(meeting.start))
+  );
 
   const renderMeetingList = () => {
     return (

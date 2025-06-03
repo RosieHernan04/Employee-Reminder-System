@@ -251,8 +251,10 @@ export default function MyTasks() {
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
   };
 
-  // Filter tasks to only show those due in the current month
-  const filteredTasks = allTasks.filter(task => isCurrentMonth(task.dueDate));
+  // Filter tasks: show all incomplete tasks, and only completed tasks from the current month
+  const filteredTasks = allTasks.filter(task =>
+    task.status !== 'completed' || (task.status === 'completed' && isCurrentMonth(task.dueDate))
+  );
 
   const renderTaskList = () => {
     return (
