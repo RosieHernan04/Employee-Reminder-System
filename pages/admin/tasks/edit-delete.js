@@ -19,6 +19,7 @@ export default function EditDeleteEmployeeTasks() {
   const [selectedTask, setSelectedTask] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(""); // Add this line
 
   useEffect(() => {
     fetchTasks();
@@ -89,7 +90,8 @@ export default function EditDeleteEmployeeTasks() {
       await deleteDoc(doc(db, 'employee_tasks', selectedTask.id));
       setTasks(tasks.filter(t => t.id !== selectedTask.id));
       handleCloseDelete();
-      alert('Task deleted successfully!');
+      setSuccessMessage('Task deleted successfully!'); // Show success message
+      setTimeout(() => setSuccessMessage(""), 2500); // Hide after 2.5s
     } catch (error) {
       console.error('Error deleting task:', error);
       alert('Failed to delete task. Please try again.');
@@ -121,6 +123,13 @@ export default function EditDeleteEmployeeTasks() {
   return (
     <Layout>
       <div className="container py-4">
+        {/* Success Toast/Alert */}
+        {successMessage && (
+          <div className="alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3 shadow" style={{ zIndex: 2000, minWidth: 300, maxWidth: 400 }}>
+            <i className="bi bi-check-circle-fill me-2"></i>
+            {successMessage}
+          </div>
+        )}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div>
             <h1 className="mb-0" style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, fontSize: '2.5rem', letterSpacing: '1px', color: '#2c3e50' }}>
