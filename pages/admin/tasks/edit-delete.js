@@ -15,6 +15,7 @@ const TaskDeleteModal = dynamic(() => import('../../../components/modals/TaskDel
 export default function EditDeleteEmployeeTasks() {
   const router = useRouter();
   const [tasks, setTasks] = useState([]);
+  const [unassignedTasks, setUnassignedTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTask, setSelectedTask] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -23,6 +24,7 @@ export default function EditDeleteEmployeeTasks() {
 
   useEffect(() => {
     fetchTasks();
+    fetchUnassignedTasks();
   }, []);
 
   const fetchTasks = async () => {
@@ -52,6 +54,32 @@ export default function EditDeleteEmployeeTasks() {
     }
   };
 
+  // Fetch unassigned tasks
+  const fetchUnassignedTasks = async () => {
+    try {
+      const tasksQuery = query(
+        collection(db, 'unassigned_tasks'),
+        orderBy('createdAt', 'desc')
+      );
+      const querySnapshot = await getDocs(tasksQuery);
+      const tasksData = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const taskData = {
+          id: doc.id,
+          ...data,
+          createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : new Date(),
+          updatedAt: data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date(),
+          deadline: data.deadline?.toDate ? data.deadline.toDate() : null
+        };
+        tasksData.push(taskData);
+      });
+      setUnassignedTasks(tasksData);
+    } catch (error) {
+      console.error('Error fetching unassigned tasks:', error);
+    }
+  };
+
   const formatDate = (date) => {
     if (!date) return 'No deadline';
     return new Date(date).toLocaleString('en-US', {
@@ -69,8 +97,20 @@ export default function EditDeleteEmployeeTasks() {
     setShowEditModal(true);
   };
 
+  // Handle edit for unassigned tasks
+  const handleEditUnassigned = (task) => {
+    setSelectedTask({ ...task, source: 'unassigned' });
+    setShowEditModal(true);
+  };
+
   const handleDelete = (task) => {
     setSelectedTask(task);
+    setShowDeleteModal(true);
+  };
+
+  // Handle delete for unassigned tasks
+  const handleDeleteUnassigned = (task) => {
+    setSelectedTask({ ...task, source: 'unassigned' });
     setShowDeleteModal(true);
   };
 
@@ -87,8 +127,13 @@ export default function EditDeleteEmployeeTasks() {
   const handleDeleteConfirm = async () => {
     if (!selectedTask) return;
     try {
-      await deleteDoc(doc(db, 'employee_tasks', selectedTask.id));
-      setTasks(tasks.filter(t => t.id !== selectedTask.id));
+      if (selectedTask.source === 'unassigned') {
+        await deleteDoc(doc(db, 'unassigned_tasks', selectedTask.id));
+        setUnassignedTasks(unassignedTasks.filter(t => t.id !== selectedTask.id));
+      } else {
+        await deleteDoc(doc(db, 'employee_tasks', selectedTask.id));
+        setTasks(tasks.filter(t => t.id !== selectedTask.id));
+      }
       handleCloseDelete();
       setSuccessMessage('Task deleted successfully!'); // Show success message
       setTimeout(() => setSuccessMessage(""), 2500); // Hide after 2.5s
@@ -98,13 +143,13 @@ export default function EditDeleteEmployeeTasks() {
     }
   };
 
-  const renderActionButtons = (task) => {
+  const renderActionButtons = (task, isUnassigned = false) => {
     const isCompleted = task.status === 'completed';
     return (
       <div className="btn-group">
         <button
           className={`btn btn-${isCompleted ? 'secondary' : 'primary'} btn-sm`}
-          onClick={() => handleEdit(task)}
+          onClick={() => isUnassigned ? handleEditUnassigned(task) : handleEdit(task)}
           disabled={isCompleted}
           title={isCompleted ? "Completed tasks cannot be edited" : "Edit task"}
         >
@@ -112,7 +157,7 @@ export default function EditDeleteEmployeeTasks() {
         </button>
         <button
           className="btn btn-danger btn-sm"
-          onClick={() => handleDelete(task)}
+          onClick={() => isUnassigned ? handleDeleteUnassigned(task) : handleDelete(task)}
         >
           <i className="bi bi-trash"></i> Delete
         </button>
@@ -204,6 +249,49 @@ export default function EditDeleteEmployeeTasks() {
           </div>
         )}
 
+        {/* Unassigned Tasks Section */}
+        <div className="mb-5">
+          <h2 className="mb-3" style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600, color: '#6c757d' }}>
+            Unassigned Tasks
+          </h2>
+          {unassignedTasks.length === 0 ? (
+            <div className="text-center py-3">
+              <i className="bi bi-clipboard-x text-muted" style={{ fontSize: '2rem' }}></i>
+              <p className="mt-2">No unassigned tasks found</p>
+            </div>
+          ) : (
+            <div className="row">
+              {unassignedTasks.map(task => (
+                <div key={task.id} className="col-md-6 col-lg-4 mb-4">
+                  <div className="card h-100 shadow-sm">
+                    <div className={`card-header bg-${getPriorityColor(task.priority)}`}>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <h5 className="mb-0 text-white">{task.title}</h5>
+                        {renderActionButtons(task, true)}
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <p className="card-text">{task.description}</p>
+                      <div className="mt-3">
+                        <div className="d-flex align-items-center mb-2">
+                          <i className="bi bi-clock me-2 text-muted"></i>
+                          <small>{formatDate(task.deadline)}</small>
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <i className="bi bi-flag me-2 text-muted"></i>
+                          <span className={`badge bg-${getStatusColor(task.status)}`}>
+                            {task.status ? task.status.charAt(0).toUpperCase() + task.status.slice(1) : 'Unassigned'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
         {/* Edit Modal */}
         {showEditModal && selectedTask && (
           <TaskEditModal
@@ -212,6 +300,7 @@ export default function EditDeleteEmployeeTasks() {
             onSuccess={() => {
               handleCloseEdit();
               fetchTasks();
+              fetchUnassignedTasks();
             }}
           />
         )}
