@@ -587,8 +587,41 @@ export default function TaskManagement() {
 
   const events = formatCalendarEvents();
 
-  // Update filteredEmployeeTasks to show all tasks
-  const filteredEmployeeTasks = employeeTasks; // ✅ Show all tasks
+  // Helper: Check if a date is in the selected month/year
+  const isInSelectedMonth = (date) => {
+    if (!date) return false;
+    const d = new Date(date);
+    return (
+      d.getFullYear() === selectedDate.getFullYear() &&
+      d.getMonth() === selectedDate.getMonth()
+    );
+  };
+
+  // Helper: Check if a task is overdue (deadline before today and not completed)
+  const isOverdue = (task) => {
+    if (!task.deadline) return false;
+    const deadline = new Date(task.deadline);
+    const now = new Date();
+    return deadline < now && task.status !== 'completed';
+  };
+
+  // Filter employee tasks: show only tasks for selected month or overdue, and not completed
+  const filteredEmployeeTasks = employeeTasks.filter(task =>
+    task.status !== 'completed' &&
+    (
+      isInSelectedMonth(task.deadline) ||
+      isOverdue(task)
+    )
+  );
+
+  // Filter admin tasks: show only tasks for selected month or overdue, and not completed
+  const filteredAdminTasks = adminTasks.filter(task =>
+    task.status !== 'completed' &&
+    (
+      isInSelectedMonth(task.deadline) ||
+      isOverdue(task)
+    )
+  );
 
   return (
     <Layout>
@@ -791,7 +824,7 @@ export default function TaskManagement() {
             {filteredEmployeeTasks.length === 0 ? (
               <div className="text-center p-4">
                 <i className="bi bi-clipboard-x text-muted" style={{ fontSize: '2rem' }}></i>
-                <p className="mt-2">No tasks created yet</p>
+                <p className="mt-2">No tasks for this month</p>
               </div>
             ) : (
               <div className="table-responsive">
@@ -845,7 +878,7 @@ export default function TaskManagement() {
         <div className="card shadow-sm mb-4 admin-tasks-card">
           <div className="card-header bg-purple text-white d-flex justify-content-between align-items-center">
             <h5 className="mb-0 text-white">Admin Tasks</h5>
-            <span className="badge bg-light text-purple">{adminTasks.length} tasks</span>
+            <span className="badge bg-light text-purple">{filteredAdminTasks.length} tasks</span>
           </div>
           <div className="card-body p-0">
             {adminLoading ? (
@@ -855,10 +888,10 @@ export default function TaskManagement() {
                 </div>
                 <p className="mt-2">Loading admin tasks...</p>
               </div>
-            ) : adminTasks.length === 0 ? (
+            ) : filteredAdminTasks.length === 0 ? (
               <div className="text-center p-4">
                 <i className="bi bi-person-badge text-muted" style={{ fontSize: '2rem' }}></i>
-                <p className="mt-2">No admin tasks created yet</p>
+                <p className="mt-2">No admin tasks for this month</p>
                 <button 
                   onClick={handleAdminTasks}
                   className="btn btn-purple mt-2"
@@ -878,7 +911,7 @@ export default function TaskManagement() {
                     </tr>
                   </thead>
                   <tbody>
-                    {adminTasks.map((task) => (
+                    {filteredAdminTasks.map((task) => (
                       <tr key={task.id} className="admin-task-row">
                         <td>
                           <div className="fw-bold text-dark">{task.title}</div>

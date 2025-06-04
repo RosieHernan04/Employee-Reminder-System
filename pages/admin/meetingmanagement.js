@@ -218,6 +218,33 @@ export default function MeetingManagement() {
     });
   }
 
+  // Helper: Check if a date is in the selected month/year
+  const isInSelectedMonth = (date) => {
+    if (!date) return false;
+    const d = new Date(date);
+    return (
+      d.getFullYear() === currentDate.getFullYear() &&
+      d.getMonth() === currentDate.getMonth()
+    );
+  };
+
+  // Helper: Check if a meeting is overdue (start before today and not completed)
+  const isOverdue = (meeting) => {
+    if (!meeting.start) return false;
+    const start = new Date(meeting.start);
+    const now = new Date();
+    return start < now && meeting.status !== 'completed';
+  };
+
+  // Filter meetings: show only meetings for selected month or overdue, and not completed
+  const filteredMeetings = meetings.filter(meeting =>
+    meeting.status !== 'completed' &&
+    (
+      isInSelectedMonth(meeting.start) ||
+      isOverdue(meeting)
+    )
+  );
+
   return (
     <Layout>
       <div>
@@ -406,7 +433,7 @@ export default function MeetingManagement() {
         <div className="card shadow-sm mb-4">
           <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h5 className="mb-0">Scheduled Meetings</h5>
-            <span className="badge bg-light text-primary">{meetings.length} meetings</span>
+            <span className="badge bg-light text-primary">{filteredMeetings.length} meetings</span>
           </div>
           <div className="card-body p-0">
             {loading ? (
@@ -416,10 +443,10 @@ export default function MeetingManagement() {
                 </div>
                 <p className="mt-2">Loading meetings...</p>
               </div>
-            ) : meetings.length === 0 ? (
+            ) : filteredMeetings.length === 0 ? (
               <div className="text-center p-4">
                 <i className="bi bi-calendar-x text-muted" style={{ fontSize: '2rem' }}></i>
-                <p className="mt-2">No meetings scheduled</p>
+                <p className="mt-2">No meetings for this month</p>
                 <button 
                   onClick={handleScheduleMeeting}
                   className="btn btn-primary mt-2"
@@ -434,7 +461,7 @@ export default function MeetingManagement() {
                     <tr>
                       <th>Title</th>
                       <th>Date</th>
-                      <th>Time</th> {/* Add Time column */}
+                      <th>Time</th>
                       <th>Type</th>
                       <th>Location</th>
                       <th>Duration</th>
@@ -443,11 +470,11 @@ export default function MeetingManagement() {
                     </tr>
                   </thead>
                   <tbody>
-                    {meetings.map((meeting) => (
+                    {filteredMeetings.map((meeting) => (
                       <tr key={meeting.id} className={meeting.status === 'completed' ? 'table-success' : ''}>
                         <td>{meeting.title}</td>
                         <td>{formatDate(meeting.start)}</td>
-                        <td>{meeting.reminderTime || 'Not set'}</td> {/* Display reminderTime under Time column */}
+                        <td>{meeting.reminderTime || 'Not set'}</td>
                         <td>{meeting.type}</td>
                         <td>{meeting.location}</td>
                         <td>{meeting.duration}</td>
