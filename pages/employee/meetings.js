@@ -87,6 +87,7 @@ export default function Meetings() {
     type: 'Team Meeting',
     description: '',
     link: '',
+    reminderDays: '', // Add reminderDays to state
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -233,11 +234,11 @@ export default function Meetings() {
         status: 'scheduled',
         date: startDate,
         time: format(startDate, 'HH:mm'),
-        start: startDate, // ✅ Include start field
+        start: startDate,
         end: endDate,
-        duration: newMeeting.duration
+        duration: newMeeting.duration,
+        reminderDays: newMeeting.reminderDays ? Number(newMeeting.reminderDays) : 0 // Store reminderDays
       };
-      
       await addDoc(meetingsRef, meetingData);
       setSuccess('Meeting scheduled successfully!');
       setShowMeetingForm(false);
@@ -249,6 +250,7 @@ export default function Meetings() {
         type: 'Team Meeting',
         description: '',
         link: '',
+        reminderDays: '', // Reset reminderDays
       });
     } catch (error) {
       console.error('Error adding meeting:', error);
@@ -297,7 +299,8 @@ export default function Meetings() {
         updatedAt: new Date(),
         start: startDate,
         end: endDate,
-        duration: newMeeting.duration
+        duration: newMeeting.duration,
+        reminderDays: newMeeting.reminderDays ? Number(newMeeting.reminderDays) : 0 // Store reminderDays
       });
       
       setSuccess('Meeting updated successfully!');
@@ -650,6 +653,7 @@ export default function Meetings() {
           type: 'Team Meeting',
           description: '',
           link: '',
+          reminderDays: '', // Reset reminderDays
         });
       }} centered>
         <Modal.Header closeButton style={{
@@ -805,6 +809,23 @@ export default function Meetings() {
                 }}
               />
             </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label style={{ color: '#333', fontWeight: '500' }}>Reminder Days (before meeting date)</Form.Label>
+              <Form.Control
+                type="number"
+                min={0}
+                placeholder="Enter number of days before meeting for reminder"
+                value={newMeeting.reminderDays || ''}
+                onChange={e => setNewMeeting({ ...newMeeting, reminderDays: e.target.value })}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  border: '2px solid rgba(255, 77, 77, 0.3)',
+                  borderRadius: '12px',
+                  padding: '12px 15px',
+                  boxShadow: '0 2px 8px rgba(255, 77, 77, 0.1)'
+                }}
+              />
+            </Form.Group>
             <div className="d-flex justify-content-end mt-4">
               <Button
                 variant="secondary"
@@ -819,6 +840,7 @@ export default function Meetings() {
                     type: 'Team Meeting',
                     description: '',
                     link: '',
+                    reminderDays: '', // Reset reminderDays
                   });
                 }}
                 style={{

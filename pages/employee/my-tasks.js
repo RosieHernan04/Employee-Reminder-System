@@ -415,7 +415,8 @@ export default function MyTasks() {
         createdBy: user.uid,
         createdAt: Timestamp.fromDate(new Date()),
         status: 'pending',
-        type: 'personal'
+        type: 'personal',
+        reminderDays: newTask.reminderDays ? Number(newTask.reminderDays) : 0 // Store reminderDays
       };
       
       const taskDoc = await addDoc(tasksRef, taskData);
@@ -431,6 +432,7 @@ export default function MyTasks() {
         dueDate: new Date(),
         dueTime: '09:00',
         priority: 'Medium',
+        reminderDays: '', // Reset reminderDays
       });
       
       // Refresh task list
@@ -460,7 +462,8 @@ export default function MyTasks() {
         dueDate: Timestamp.fromDate(dueDateTime),
         dueTime: newTask.dueTime,
         priority: newTask.priority,
-        updatedAt: Timestamp.fromDate(new Date())
+        updatedAt: Timestamp.fromDate(new Date()),
+        reminderDays: newTask.reminderDays ? Number(newTask.reminderDays) : 0 // Store reminderDays
       });
       
       setSuccess('Task updated successfully!');
@@ -473,6 +476,7 @@ export default function MyTasks() {
         dueDate: new Date(),
         dueTime: '09:00',
         priority: 'Medium',
+        reminderDays: '', // Reset reminderDays
       });
     } catch (error) {
       console.error('Error updating task:', error);
@@ -724,6 +728,18 @@ export default function MyTasks() {
                 onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
               />
             </Form.Group>
+            {/* Add Reminder Days Field */}
+            <Form.Group className="mb-3">
+              <Form.Label>Reminder Days (before due date)</Form.Label>
+              <Form.Control
+                type="number"
+                min={0}
+                placeholder="Enter number of days before due date for reminder"
+                value={newTask.reminderDays || ''}
+                onChange={e => setNewTask({ ...newTask, reminderDays: e.target.value })}
+              />
+            </Form.Group>
+            {/* End Reminder Days Field */}
             <div className="row">
               <div className="col-md-6">
                 <Form.Group className="mb-3">
