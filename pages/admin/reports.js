@@ -40,26 +40,38 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#bfbfbf',
     marginBottom: 10,
+    marginTop: 10,
+    tableLayout: 'fixed', // Ensure fixed layout
   },
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#bfbfbf',
-    minHeight: 30,
+    minHeight: 20,
     alignItems: 'center',
   },
   tableHeader: {
     backgroundColor: '#f0f0f0',
   },
   tableCell: {
-    flex: 1,
-    padding: 5,
+    padding: 4,
+    fontSize: 9,
+    wordBreak: 'break-word',
+    overflow: 'hidden',
+    // Set explicit width for each column below
   },
   tableCellHeader: {
-    flex: 1,
-    padding: 5,
+    padding: 4,
     fontWeight: 'bold',
+    fontSize: 10,
+    wordBreak: 'break-word',
+    overflow: 'hidden',
+    // Set explicit width for each column below
   },
+  cellDate: { width: '22%', padding: 4, fontSize: 9, wordBreak: 'break-word', overflow: 'hidden' },
+  cellAdmin: { width: '22%', padding: 4, fontSize: 9, wordBreak: 'break-word', overflow: 'hidden' },
+  cellAction: { width: '18%', padding: 4, fontSize: 9, wordBreak: 'break-word', overflow: 'hidden' },
+  cellDetails: { width: '38%', padding: 4, fontSize: 9, wordBreak: 'break-word', overflow: 'hidden' },
   statBox: {
     padding: 10,
     marginBottom: 10,
@@ -154,19 +166,19 @@ const ReportDocument = ({ data, reportType, dateRange }) => (
             <Text style={styles.subtitle}>Total Activities: {data.length}</Text>
             <View style={styles.table}>
               <View style={[styles.tableRow, styles.tableHeader]}>
-                <Text style={styles.tableCellHeader}>Date/Time</Text>
-                <Text style={styles.tableCellHeader}>Admin</Text>
-                <Text style={styles.tableCellHeader}>Action</Text>
-                <Text style={styles.tableCellHeader}>Details</Text>
+                <Text style={[styles.tableCellHeader, styles.cellDate]}>Date/Time</Text>
+                <Text style={[styles.tableCellHeader, styles.cellAdmin]}>Admin</Text>
+                <Text style={[styles.tableCellHeader, styles.cellAction]}>Action</Text>
+                <Text style={[styles.tableCellHeader, styles.cellDetails]}>Details</Text>
               </View>
               {data.map((log, index) => (
                 <View key={index} style={styles.tableRow}>
-                  <Text style={styles.tableCell}>
+                  <Text style={[styles.tableCell, styles.cellDate]}>
                     {log.timestamp ? format(log.timestamp, 'MMM d, yyyy h:mm a') : 'N/A'}
                   </Text>
-                  <Text style={styles.tableCell}>{log.adminName || 'System'}</Text>
-                  <Text style={styles.tableCell}>{log.actionType}</Text>
-                  <Text style={styles.tableCell}>{log.details}</Text>
+                  <Text style={[styles.tableCell, styles.cellAdmin]}>{log.adminName || 'System'}</Text>
+                  <Text style={[styles.tableCell, styles.cellAction]}>{log.actionType}</Text>
+                  <Text style={[styles.tableCell, styles.cellDetails]}>{log.details}</Text>
                 </View>
               ))}
             </View>
