@@ -85,7 +85,7 @@ export default function FAQs() {
               background: "transparent"
             }}>
               <Image
-                src="/487083768_557976863971305_3421396436649360911_n.jpg"
+                src="/ADECMPCLOGO.png"
                 alt="ADECMPC Logo"
                 width={100}
                 height={100}

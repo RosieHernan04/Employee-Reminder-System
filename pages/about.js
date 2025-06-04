@@ -33,14 +33,15 @@ export default function About() {
               justifyContent: "center",
               background: "transparent"
             }}>
-              <div style={{ position: "relative", width: "100px", height: "100px", borderRadius: "50%", overflow: "hidden" }}>
-                <Image
-                  src="/487083768_557976863971305_3421396436649360911_n.jpg"
-                  alt="ADECMPC Logo"
-                  fill
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
+              {/* Fix: Use Image with fixed size and no extra wrapper */}
+              <Image
+                src="/ADECMPCLOGO.png"
+                alt="ADECMPC Logo"
+                width={50}
+                height={50}
+                style={{ objectFit: "cover", borderRadius: "50%" }}
+                priority
+              />
             </div>
             <span className="text-success fw-bold">ADECMPC</span>
           </Link>
