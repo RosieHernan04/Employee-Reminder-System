@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { doc, updateDoc, Timestamp } from 'firebase/firestore';
+import { db } from 'lib/firebase';
 
 export default function MeetingStatus({ meeting, onStatusChange, isAdmin = false }) {
   const [loading, setLoading] = useState(false);
@@ -18,34 +20,43 @@ export default function MeetingStatus({ meeting, onStatusChange, isAdmin = false
   };
 
   const handleMarkAsCompleted = async () => {
+    if (meeting.status === 'completed') {
+      const infoMessage = document.createElement('div');
+      infoMessage.className = 'alert alert-info alert-dismissible fade show position-fixed top-0 end-0 m-3';
+      infoMessage.innerHTML = `
+        <strong>Info:</strong> This meeting is already marked as completed.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      `;
+      document.body.appendChild(infoMessage);
+      setTimeout(() => infoMessage.remove(), 3000);
+      return;
+    }
+
     if (!window.confirm('Are you sure you want to mark this meeting as completed?')) {
+      const warnMessage = document.createElement('div');
+      warnMessage.className = 'alert alert-warning alert-dismissible fade show position-fixed top-0 end-0 m-3';
+      warnMessage.innerHTML = `
+        <strong>Cancelled:</strong> Status update was cancelled.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      `;
+      document.body.appendChild(warnMessage);
+      setTimeout(() => warnMessage.remove(), 2500);
       return;
     }
 
     try {
       setLoading(true);
-      
-      const response = await fetch('/api/meetings/update-status', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          meetingId: meeting.id,
-          status: 'completed',
-          completedBy: 'admin'
-        }),
-      });
 
-      if (!response.ok) {
-        throw new Error('Failed to update meeting status');
-      }
+      await updateDoc(doc(db, 'meetings', meeting.id), {
+        status: 'completed',
+        completedBy: 'admin',
+        completedAt: Timestamp.now()
+      });
 
       if (onStatusChange) {
         onStatusChange('completed');
       }
 
-      // Show success message
       const successMessage = document.createElement('div');
       successMessage.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3';
       successMessage.innerHTML = `
@@ -58,17 +69,25 @@ export default function MeetingStatus({ meeting, onStatusChange, isAdmin = false
 
     } catch (error) {
       console.error('Error updating meeting status:', error);
-      
-      // Show error message
+
+      let errorText = 'Failed to update meeting status.';
+      if (error.code === 'permission-denied') {
+        errorText = 'You do not have permission to update this meeting.';
+      } else if (error.code === 'not-found' || error.message?.includes('No document to update')) {
+        errorText = 'Meeting not found. It may have been deleted.';
+      } else if (error.message) {
+        errorText = error.message;
+      }
+
       const errorMessage = document.createElement('div');
       errorMessage.className = 'alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3';
       errorMessage.innerHTML = `
-        <strong>Error!</strong> Failed to update meeting status.
+        <strong>Error!</strong> ${errorText}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       `;
       document.body.appendChild(errorMessage);
 
-      setTimeout(() => errorMessage.remove(), 3000);
+      setTimeout(() => errorMessage.remove(), 4000);
     } finally {
       setLoading(false);
     }
@@ -120,4 +139,4 @@ export default function MeetingStatus({ meeting, onStatusChange, isAdmin = false
       `}</style>
     </div>
   );
-} 
+}
