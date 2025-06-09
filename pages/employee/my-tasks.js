@@ -398,13 +398,23 @@ export default function MyTasks() {
     e.preventDefault();
     try {
       setLoading(true);
-      const tasksRef = collection(db, 'tasks');
-      
-      // Convert dueDate to Firestore Timestamp
+
+      // Combine dueDate and dueTime to a Date object
       const dueDateTime = new Date(newTask.dueDate);
       const [hours, minutes] = newTask.dueTime.split(':');
       dueDateTime.setHours(parseInt(hours), parseInt(minutes));
+
+      // Check if dueDateTime is in the past or today (before now)
+      const now = new Date();
+      if (dueDateTime <= now) {
+        showBanner('Selected due date and time is already past or today. Please select a future date and time.', 'danger');
+        setLoading(false);
+        return;
+      }
+
+      const tasksRef = collection(db, 'tasks');
       
+      // Convert dueDate to Firestore Timestamp
       const taskData = {
         title: newTask.title,
         description: newTask.description,

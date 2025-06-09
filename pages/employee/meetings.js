@@ -84,7 +84,6 @@ export default function Meetings() {
     date: new Date(),
     time: '09:00',
     duration: '1 hour',
-    type: 'Team Meeting',
     description: '',
     link: '',
     reminderDays: '', // Add reminderDays to state
@@ -189,7 +188,7 @@ export default function Meetings() {
     e.preventDefault();
     try {
       setLoading(true);
-      
+
       const [hours, minutes] = newMeeting.time.split(':').map(Number);
       const meetingDate = new Date(newMeeting.date);
       const startDate = new Date(
@@ -201,6 +200,21 @@ export default function Meetings() {
         0,
         0
       );
+
+      // Validation: Prevent scheduling in the past (today allowed if time is in the future)
+      const now = new Date();
+      if (
+        startDate < now ||
+        (
+          startDate.toDateString() === now.toDateString() &&
+          (startDate.getHours() < now.getHours() ||
+            (startDate.getHours() === now.getHours() && startDate.getMinutes() <= now.getMinutes()))
+        )
+      ) {
+        setError('Selected meeting date and time is already past. Please select a future date and time.');
+        setLoading(false);
+        return;
+      }
 
       const endDate = new Date(startDate);
       let durationHours = 1;
@@ -226,7 +240,6 @@ export default function Meetings() {
       const meetingsRef = collection(db, 'employee_meetings');
       const meetingData = {
         title: newMeeting.title,
-        type: newMeeting.type,
         description: newMeeting.description,
         link: newMeeting.link,
         userId: user.uid,
@@ -247,7 +260,6 @@ export default function Meetings() {
         date: new Date(),
         time: '09:00',
         duration: '1 hour',
-        type: 'Team Meeting',
         description: '',
         link: '',
         reminderDays: '', // Reset reminderDays
@@ -293,7 +305,6 @@ export default function Meetings() {
       const meetingRef = doc(db, 'employee_meetings', editingMeeting.id);
       await updateDoc(meetingRef, {
         title: newMeeting.title,
-        type: newMeeting.type,
         description: newMeeting.description,
         link: newMeeting.link,
         updatedAt: new Date(),
@@ -650,7 +661,6 @@ export default function Meetings() {
           date: new Date(),
           time: '09:00',
           duration: '1 hour',
-          type: 'Team Meeting',
           description: '',
           link: '',
           reminderDays: '', // Reset reminderDays
@@ -755,25 +765,9 @@ export default function Meetings() {
                 <option value="1 hour">1 hour</option>
                 <option value="1.5 hours">1.5 hours</option>
                 <option value="2 hours">2 hours</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label style={{ color: '#333', fontWeight: '500' }}>Type</Form.Label>
-              <Form.Select
-                value={newMeeting.type}
-                onChange={(e) => setNewMeeting({ ...newMeeting, type: e.target.value })}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.8)',
-                  border: '2px solid rgba(255, 77, 77, 0.3)',
-                  borderRadius: '12px',
-                  padding: '12px 15px',
-                  boxShadow: '0 2px 8px rgba(255, 77, 77, 0.1)'
-                }}
-              >
-                <option value="Team Meeting">Team Meeting</option>
-                <option value="One-on-One">One-on-One</option>
-                <option value="Client Meeting">Client Meeting</option>
-                <option value="Other">Other</option>
+                <option value="3 hours">3 hours</option>
+                <option value="4 hours">4 hours</option>
+                <option value="5 hours">5 hours</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
@@ -837,7 +831,6 @@ export default function Meetings() {
                     date: new Date(),
                     time: '09:00',
                     duration: '1 hour',
-                    type: 'Team Meeting',
                     description: '',
                     link: '',
                     reminderDays: '', // Reset reminderDays
@@ -982,6 +975,14 @@ export default function Meetings() {
         .badge.bg-secondary {
           background: #8b4513 !important;
           color: #fff !important;
+        }
+        /* Hide ALL .rbc-btn-group (navigation + view buttons) */
+        :global(.rbc-toolbar .rbc-btn-group) {
+          display: none !important;
+        }
+        /* Show ONLY the first .rbc-btn-group (Today/Back/Next) */
+        :global(.rbc-toolbar .rbc-btn-group:first-of-type) {
+          display: inline-flex !important;
         }
         .card {
           border: none;
