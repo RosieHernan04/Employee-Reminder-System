@@ -6,6 +6,7 @@ import { db } from '../../dataconnect/firebase';
 import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth, subMonths } from 'date-fns';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import Link from 'next/link';
+import { startOfQuarter, endOfQuarter, startOfYear, endOfYear } from 'date-fns';
 
 // PDF Styles
 const styles = StyleSheet.create({
@@ -232,11 +233,11 @@ export default function Reports() {
   // Get date range based on selected option
   const getDateRange = () => {
     const now = new Date();
-    
+
     if (dateRange === 'week') {
       return {
-        start: startOfWeek(now, { weekStartsOn: 1 }), // Monday
-        end: endOfWeek(now, { weekStartsOn: 1 }) // Sunday
+        start: startOfWeek(now, { weekStartsOn: 1 }),
+        end: endOfWeek(now, { weekStartsOn: 1 })
       };
     } else if (dateRange === 'month') {
       return {
@@ -245,8 +246,13 @@ export default function Reports() {
       };
     } else if (dateRange === 'quarter') {
       return {
-        start: subMonths(now, 3),
-        end: now
+        start: startOfQuarter(now),
+        end: endOfQuarter(now)
+      };
+    } else if (dateRange === 'year') {
+      return {
+        start: startOfYear(now),
+        end: endOfYear(now)
       };
     } else {
       return {
