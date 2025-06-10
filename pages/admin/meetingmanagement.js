@@ -236,13 +236,12 @@ export default function MeetingManagement() {
     return start < now && meeting.status !== 'completed';
   };
 
-  // Filter meetings: show only meetings for selected month or overdue, and not completed
+  // Filter meetings: 
+  // - Show all meetings for the selected month (regardless of status)
+  // - Also show meetings not completed (regardless of date)
   const filteredMeetings = meetings.filter(meeting =>
-    meeting.status !== 'completed' &&
-    (
-      isInSelectedMonth(meeting.start) ||
-      isOverdue(meeting)
-    )
+    isInSelectedMonth(meeting.start) ||
+    meeting.status !== 'completed'
   );
 
   return (

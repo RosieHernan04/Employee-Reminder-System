@@ -335,7 +335,7 @@ export default function Reports() {
       const stats = {
         total: 0,
         upcoming: 0,
-        attendance: 0,
+        completed: 0,
         types: {}
       };
 
@@ -345,12 +345,13 @@ export default function Reports() {
 
         stats.total++;
 
-        if (startDate >= new Date()) {
+        // Only count as upcoming if not completed
+        if (startDate >= new Date() && meeting.status !== 'completed') {
           stats.upcoming++;
         }
 
-        if (meeting.attendance) {
-          stats.attendance++;
+        if (meeting.status === 'completed') {
+          stats.completed++;
         }
 
         const type = meeting.type || 'Unknown';
@@ -631,9 +632,9 @@ export default function Reports() {
                       <div className="col-md-3 col-sm-6">
                         <div className="card bg-info text-white h-100">
                           <div className="card-body d-flex flex-column">
-                            <h6 className="card-title">Attendance Tracked</h6>
-                            <h2 className="display-4 mb-2">{meetingStats.attendance}</h2>
-                            <p className="text-white-50 mb-0 mt-auto">With attendance records</p>
+                            <h6 className="card-title">Completed Meetings</h6>
+                            <h2 className="display-4 mb-2">{meetingStats.completed}</h2>
+                            <p className="text-white-50 mb-0 mt-auto">Marked as completed</p>
                           </div>
                         </div>
                       </div>
