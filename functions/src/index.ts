@@ -552,8 +552,6 @@ Task Management System`,
       ) {
         // Determine recipient email
         let recipientEmail: string | undefined = undefined;
-
-        // Admin-assigned: has assignedTo.email, employee-created: has createdBy.email or createdBy.id
         if (meeting.assignedTo?.email) {
           recipientEmail = meeting.assignedTo.email;
         } else if (meeting.createdBy?.email) {
@@ -586,6 +584,23 @@ Task Management System`,
         });
 
         // Compose mail with description and link
+        let meetingLink = "No meeting link provided.";
+        // Employee-created: has userId (string), no assignedTo, has "link" (string)
+        if (
+          typeof meeting.userId === "string" &&
+          !meeting.assignedTo &&
+          typeof meeting.link === "string" &&
+          meeting.link.trim() !== ""
+        ) {
+          meetingLink = meeting.link;
+        } else if (
+          typeof meeting.meetingLink === "string" &&
+          meeting.meetingLink.trim() !== ""
+        ) {
+          // Admin-assigned: use meetingLink if present
+          meetingLink = meeting.meetingLink;
+        }
+
         const mailOptions = {
           from: EMAIL_USER.value(),
           to: recipientEmail,
@@ -598,7 +613,7 @@ This is a friendly reminder for your upcoming meeting.
 📅 Date: ${formattedDate}
 ⏰ Time: ${formattedTime}
 📝 Description: ${meeting.description || "No description provided."}
-🔗 Link: ${meeting.link || "No meeting link provided."}
+🔗 Link: ${meetingLink}
 
 Please make sure to attend this meeting.
 
@@ -681,6 +696,21 @@ Task Management System`,
         });
 
         // Compose mail with description and link
+        let meetingLink = "No meeting link provided.";
+        if (
+          typeof meeting.userId === "string" &&
+          !meeting.assignedTo &&
+          typeof meeting.link === "string" &&
+          meeting.link.trim() !== ""
+        ) {
+          meetingLink = meeting.link;
+        } else if (
+          typeof meeting.meetingLink === "string" &&
+          meeting.meetingLink.trim() !== ""
+        ) {
+          meetingLink = meeting.meetingLink;
+        }
+
         const mailOptions = {
           from: EMAIL_USER.value(),
           to: recipientEmail,
@@ -693,7 +723,7 @@ This is a friendly reminder for your upcoming meeting.
 📅 Date: ${formattedDate}
 ⏰ Time: ${formattedTime}
 📝 Description: ${meeting.description || "No description provided."}
-🔗 Link: ${meeting.link || "No meeting link provided."}
+🔗 Link: ${meetingLink}
 
 Please make sure to attend this meeting.
 
