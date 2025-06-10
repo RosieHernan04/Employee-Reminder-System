@@ -31,7 +31,19 @@ export default function CreateTask() {
 
     try {
       const deadline = new Date(formData.deadlineDate + 'T' + formData.deadlineTime);
-      
+
+      // Prevent creating a task if deadline is in the past
+      const now = new Date();
+      if (
+        !formData.deadlineDate ||
+        deadline < now ||
+        (formData.deadlineDate === now.toISOString().slice(0, 10) && deadline <= now)
+      ) {
+        setAlert({ type: 'error', message: 'Deadline must be in the future. Please select a valid date and time.' });
+        setLoading(false);
+        return;
+      }
+
       // Create the task in unassigned_tasks collection
       const taskRef = await addDoc(collection(db, 'unassigned_tasks'), {
         title: formData.title,

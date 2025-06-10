@@ -49,7 +49,7 @@ export default function ScheduleMeeting() {
       }
 
       // Parse the date and time to create a proper Date object
-      const [hours, minutes] = (meetingDetails.time || '09:00').split(':').map(Number); // Add fallback for time
+      const [hours, minutes] = (meetingDetails.time || '09:00').split(':').map(Number);
       const meetingDate = new Date(meetingDetails.date);
 
       const startDate = new Date(
@@ -61,6 +61,18 @@ export default function ScheduleMeeting() {
         0,
         0
       );
+
+      // Prevent scheduling if startDate is in the past
+      const now = new Date();
+      if (
+        !meetingDetails.date ||
+        startDate < now ||
+        (meetingDetails.date === now.toISOString().slice(0, 10) && startDate <= now)
+      ) {
+        setError('Meeting date and time must be in the future. Please select a valid date and time.');
+        setLoading(false);
+        return;
+      }
 
       // Calculate the end time based on the duration
       const endDate = new Date(startDate);
