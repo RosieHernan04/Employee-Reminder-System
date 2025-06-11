@@ -364,20 +364,20 @@ export default function Reports() {
     }
   };
 
-  // Updated fetchAdminActivity function
+  // Updated fetchAdminActivity function to include admin_tasks and meetings created by admin
   const fetchAdminActivity = async () => {
     try {
       const { start, end } = getDateRange();
       const startTimestamp = Timestamp.fromDate(start);
       const endTimestamp = Timestamp.fromDate(end);
 
+      // Fetch from admin_activity collection
       const activityQuery = query(
         collection(db, 'admin_activity'),
         where('timestamp', '>=', startTimestamp),
         where('timestamp', '<=', endTimestamp),
         orderBy('timestamp', 'desc')
       );
-
       const activitySnapshot = await getDocs(activityQuery);
       const activityData = activitySnapshot.docs.map(doc => {
         const data = doc.data();
@@ -388,10 +388,86 @@ export default function Reports() {
           actionType: data.action || 'Unknown',
           assignedBy: data.assignedBy || null,
           details: typeof data.details === 'object' ? JSON.stringify(data.details) : data.details || 'N/A',
+          source: 'admin_activity'
         };
       });
 
-      setAdminActivity(activityData);
+      // Fetch admin-created tasks from admin_tasks collection
+      const adminTasksQuery = query(
+        collection(db, 'admin_tasks'),
+        where('createdAt', '>=', startTimestamp),
+        where('createdAt', '<=', endTimestamp)
+      );
+      const adminTasksSnapshot = await getDocs(adminTasksQuery);
+      const adminTasksData = adminTasksSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          timestamp: data.createdAt?.toDate() || new Date(),
+          adminName: data.createdByName || data.adminName || 'Admin',
+          actionType: 'TASK_CREATED',
+          assignedBy: null,
+          details: data.title ? `Task: ${data.title}` : 'Task created',
+          source: 'admin_tasks'
+        };
+      });
+
+      // Fetch meetings created by admin from meetings collection
+      const meetingsQuery = query(
+        collection(db, 'meetings'),
+        where('createdAt', '>=', startTimestamp),
+        where('createdAt', '<=', endTimestamp)
+      );
+      const meetingsSnapshot = await getDocs(meetingsQuery);
+      // Include all meetings in the date range as admin actions
+      const meetingsData = meetingsSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          timestamp: data.createdAt?.toDate() || new Date(),
+          adminName: data.createdByName || data.adminName || 'Admin',
+          actionType: 'MEETING_CREATED',
+          assignedBy: null,
+          details: data.title ? `Meeting: ${data.title}` : 'Meeting created',
+          source: 'meetings'
+        };
+      });
+
+      // Fetch admin-assigned tasks from employee_tasks collection
+      const assignedTasksQuery = query(
+        collection(db, 'employee_tasks'),
+        where('createdAt', '>=', startTimestamp),
+        where('createdAt', '<=', endTimestamp)
+      );
+      const assignedTasksSnapshot = await getDocs(assignedTasksQuery);
+      const assignedTasksData = assignedTasksSnapshot.docs
+        .filter(doc => {
+          const data = doc.data();
+          // Only include if assigned by admin (adjust field as needed)
+          return data.assignedByRole === 'admin' || data.assignedBy?.role === 'admin' || data.assignedByName || data.adminName;
+        })
+        .map(doc => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            timestamp: data.createdAt?.toDate() || new Date(),
+            adminName: data.assignedByName || data.adminName || 'Admin',
+            actionType: 'TASK_ASSIGNED',
+            assignedBy: data.assignedBy || null,
+            details: data.title ? `Assigned Task: ${data.title}` : 'Task assigned',
+            source: 'employee_tasks'
+          };
+        });
+
+      // Merge all logs and sort by timestamp descending
+      const mergedLogs = [
+        ...activityData,
+        ...adminTasksData,
+        ...meetingsData,
+        ...assignedTasksData
+      ].sort((a, b) => b.timestamp - a.timestamp);
+
+      setAdminActivity(mergedLogs);
     } catch (error) {
       console.error('Error fetching admin activity:', error);
     }
