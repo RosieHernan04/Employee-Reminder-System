@@ -211,6 +211,10 @@ export default function AssignTask() {
                         </div>
                         <p>Please log in to your dashboard to view the task details and start working on it.</p>
                         <p><strong>Reminder:</strong> You will receive a reminder 30 minutes before the task deadline.</p>
+                        <a href="https://employee-reminder-system.vercel.app" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; margin: 10px 0;">Go to Website</a>
+                        <p style="font-size: 0.9em; color: #888; margin-top: 16px;">
+                          Or visit: <a href="https://employee-reminder-system.vercel.app" style="color: #0d6efd;">https://employee-reminder-system.vercel.app</a>
+                        </p>
                         <p>Best regards,<br>${assignedBy.name}</p>
                       </div>
                     `
@@ -472,4 +476,4 @@ export default function AssignTask() {
       `}</style>
     </Layout>
   );
-} 
+}

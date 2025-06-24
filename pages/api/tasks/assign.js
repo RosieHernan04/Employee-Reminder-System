@@ -77,7 +77,14 @@ export default async function handler(req, res) {
             </div>
             <p>Click the button below to view task details:</p>
             <a href="${taskLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 15px 0;">View Task Details</a>
+            <br>
+            <a href="https://employee-reminder-system.vercel.app" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; margin: 10px 0;">Go to Website</a>
             <p style="color: #6c757d; font-size: 0.9em;">Please complete this task by the specified deadline.</p>
+            <hr style="margin: 24px 0;">
+            <p style="font-size: 0.9em; color: #888;">
+              Visit our website: 
+              <a href="https://employee-reminder-system.vercel.app" style="color: #007bff;">https://employee-reminder-system.vercel.app</a>
+            </p>
           </div>
         `
       };
@@ -102,4 +109,4 @@ export default async function handler(req, res) {
     console.error('Error sending task assignments:', error);
     res.status(500).json({ message: 'Error sending task assignments' });
   }
-} 
+}

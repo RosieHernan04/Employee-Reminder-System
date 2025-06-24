@@ -111,6 +111,9 @@ This is a friendly reminder for your upcoming meeting.
 
 Please make sure to attend this meeting.
 
+You can access the system here:
+https://employee-reminder-system.vercel.app
+
 Thank you,
 Task Management System`,
   };
@@ -247,6 +250,9 @@ This is a friendly reminder for your upcoming task.
 
 Please make sure to complete this task before the deadline.
 
+You can access the system here:
+https://employee-reminder-system.vercel.app
+
 Thank you,
 Task Management System`,
         };
@@ -337,6 +343,9 @@ This is a friendly reminder for your upcoming task.
 📅 Deadline: ${formattedDeadline}
 
 Please make sure to complete this task before the deadline.
+
+You can access the system here:
+https://employee-reminder-system.vercel.app
 
 Thank you,
 Task Management System`,
@@ -617,6 +626,9 @@ This is a friendly reminder for your upcoming meeting.
 
 Please make sure to attend this meeting.
 
+You can access the system here:
+https://employee-reminder-system.vercel.app
+
 Thank you,
 Task Management System`,
         };
@@ -726,6 +738,9 @@ This is a friendly reminder for your upcoming meeting.
 🔗 Link: ${meetingLink}
 
 Please make sure to attend this meeting.
+
+You can access the system here:
+https://employee-reminder-system.vercel.app
 
 Thank you,
 Task Management System`,
